@@ -1,0 +1,22 @@
+.root {
+    -fx-font-family: "Arial";
+    -fx-background-color: linear-gradient(to bottom, #4facfe, #00f2fe);
+}
+
+Label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+TextField, PasswordField {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: white;
+}
+
+Button {
+    -fx-background-color: #ffffffaa;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+}
