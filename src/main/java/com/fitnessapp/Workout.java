@@ -1,51 +1,102 @@
 package com.fitnessapp;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+/**
+ * Represents a workout session containing multiple exercises.
+ */
 public class Workout {
-    //init variables
-    private int id;
-    private int date;
+    /** Unique identifier for the workout. */
+    private UUID id;
+
+    /** Date of the workout. */
+    private Date date;
+
+    /** Optional notes about the workout. */
     private String notes;
+
+    /** List of exercises included in the workout. */
     private List<Exercise> exercises;
 
-    //blank constructor for now
-    public Workout(){
+    /** Default constructor. */
+    public Workout() {
     }
 
-    public int getId(){
+    /**
+     * Gets the workout ID.
+     * @return the workout ID
+     */
+    public UUID getId() {
         return id;
     }
 
-    public int getDate(){
+    /**
+     * Gets the workout date.
+     * @return the workout date
+     */
+    public Date getDate() {
         return date;
     }
-    public void setDate(int date){
+
+    /**
+     * Sets the workout date.
+     * @param date the date to set
+     */
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getNotes(){
+    /**
+     * Gets any notes associated with the workout.
+     * @return the workout notes
+     */
+    public String getNotes() {
         return notes;
     }
-    public void setNotes(String notes){
+
+    /**
+     * Sets notes for the workout.
+     * @param notes the notes to set
+     */
+    public void setNotes(String notes) {
         this.notes = notes;
     }
 
-    public List<Exercise> getExercises(){
+    /**
+     * Gets the list of exercises in this workout.
+     * @return the list of exercises
+     */
+    public List<Exercise> getExercises() {
         return exercises;
     }
-    public void setExercises(List<Exercise> exercises){
+
+    /**
+     * Sets the list of exercises for this workout.
+     * @param exercises the list of exercises to set
+     */
+    public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
     }
 
-    public void addExercise(Exercise exercise){
+    /**
+     * Adds a single exercise to the workout.
+     * @param exercise the exercise to add
+     */
+    public void addExercise(Exercise exercise) {
         exercises.add(exercise);
     }
 
-    public float getTotalVolume(){
+    /**
+     * Calculates the total workout volume.
+     * The total volume is the sum of (reps × weight) for all sets in all exercises.
+     * @return the total volume of the workout
+     */
+    public float getTotalVolume() {
         float total = 0;
-        for (Exercise exercise : exercises){
-            for (ExerciseSet set : exercise.getSetList()){
+        for (Exercise exercise : exercises) {
+            for (ExerciseSet set : exercise.getSetList()) {
                 total += set.getReps() * set.getWeight();
             }
         }

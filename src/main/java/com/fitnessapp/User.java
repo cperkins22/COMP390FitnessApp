@@ -12,7 +12,7 @@ import java.util.List;
 public class User {
 
     // Attributes
-    private UUID id;
+    private final UUID id;
     private String firstName;
     private String lastName;
     private String email;

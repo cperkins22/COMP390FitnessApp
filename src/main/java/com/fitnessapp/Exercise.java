@@ -25,107 +25,140 @@ import java.util.List;
  * - getTotalWeightLifted(): Calculates total (reps × weight) for all sets.
  * - Getters and Setters: Access or modify exercise data safely.
  */
+
 public class Exercise {
 
-    private UUID id;
+    /** Unique identifier for the exercise. */
+    private final UUID id;
+
+    /** Name of the exercise (e.g., Bench Press, Squat). */
     private String name;
+
+    /** Description or notes about the exercise. */
     private String description;
+
+    /** Number of sets for this exercise. */
     private int sets;
+
+    /** Number of repetitions per set (default, not enforced). */
     private int repsPerSet;
+
+    /** List of all sets associated with this exercise. */
     private List<ExerciseSet> setList;
 
-    // Minimal constructor and initialize state
-    public Exercise(String name, String description){
-
-        // Generate a random, unique ID for this exercise
+    /**
+     * Constructs a new Exercise with the given name and description.
+     * Generates a unique ID and initializes an empty list of sets.
+     *
+     * @param name the name of the exercise
+     * @param description a short description of the exercise
+     */
+    public Exercise(String name, String description) {
         this.id = UUID.randomUUID();
-
-        // Set the name and description provided by whoever creates the object
         this.name = name;
         this.description = description;
-
-        // Initialize these numeric values to 0 by default
         this.sets = 0;
         this.repsPerSet = 0;
-
-        // Create an empty ArrayList so we can later add ExerciseSets to it
         this.setList = new ArrayList<>();
-
     }
 
-
-    // Add one ExerciseSet to the exercise
-    // e.g. benchPress.addSet(new ExerciseSet(8,135f));
-    public void addSet(ExerciseSet set){
-
-        // Check for null / nagtive values
-        if (set==null) return;
+    /**
+     * Adds a set to this exercise.
+     * Ignores invalid or null sets.
+     *
+     * @param set the set to add
+     */
+    public void addSet(ExerciseSet set) {
+        if (set == null) return;
         if (set.getReps() < 0 || set.getWeight() < 0) return;
 
-        // Add the ExerciseSet object to the list
         setList.add(set);
-
-        // Update the "sets" count so it always matches how many sets we have
         this.sets = setList.size();
-
     }
 
-
-    // Calculates the total weight lifted in all the sets
-    public float getTotalWeightLifted(){
-
-        // Start total at 0
+    /**
+     * Calculates the total weight lifted across all sets.
+     * The total is the sum of (reps × weight) for each set.
+     *
+     * @return the total weight lifted
+     */
+    public float getTotalWeightLifted() {
         float total = 0.0f;
-
-        // Loop through every ExerciseSet object in setList
-        for (ExerciseSet s : setList){
-            // Add reps*weight to the total
+        for (ExerciseSet s : setList) {
             total += (s.getReps() * s.getWeight());
         }
-
-        // Return final sum
         return total;
-
     }
 
-
-    // GETTERS + SETTERS
-
-    public UUID getId(){
+    /**
+     * Gets the unique ID of the exercise.
+     * @return the exercise ID
+     */
+    public UUID getId() {
         return id;
     }
 
-    public String getName(){
+    /**
+     * Gets the name of the exercise.
+     * @return the exercise name
+     */
+    public String getName() {
         return name;
     }
 
-    public void setName(String name){
+    /**
+     * Sets the name of the exercise.
+     * @param name the exercise name
+     */
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription(){
+    /**
+     * Gets the description of the exercise.
+     * @return the exercise description
+     */
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description){
+    /**
+     * Sets the description of the exercise.
+     * @param description the exercise description
+     */
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public int getSets(){
+    /**
+     * Gets the number of sets for this exercise.
+     * @return the number of sets
+     */
+    public int getSets() {
         return sets;
     }
 
-    public int getRepsPerSet(){
+    /**
+     * Gets the number of repetitions per set.
+     * @return the number of reps per set
+     */
+    public int getRepsPerSet() {
         return repsPerSet;
     }
 
-    public void setRepsPerSet(int repsPerSet){
+    /**
+     * Sets the number of repetitions per set.
+     * @param repsPerSet the reps per set value
+     */
+    public void setRepsPerSet(int repsPerSet) {
         this.repsPerSet = repsPerSet;
     }
 
-    public List<ExerciseSet> getSetList(){
+    /**
+     * Gets the list of sets for this exercise.
+     * @return the list of exercise sets
+     */
+    public List<ExerciseSet> getSetList() {
         return setList;
     }
-
-
 }

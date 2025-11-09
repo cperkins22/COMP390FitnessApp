@@ -3,113 +3,172 @@ package com.fitnessapp;
 import java.util.UUID;
 import java.util.Date;
 
+/**
+ * Represents a meal with nutritional information such as calories and macronutrients.
+ * Each meal has a unique ID, name, date, and macros for tracking.
+ */
 public class Meal {
 
-    private UUID id;
+    /** Unique identifier for the meal. */
+    private final UUID id;
+
+    /** Date when the meal was created or logged. */
     private Date date;
+
+    /** Name of the meal (e.g., "Scrambled Eggs", "Lunch"). */
     private String name;
+
+    /** Total calories in the meal. */
     private int calories;
+
+    /** Total protein in grams. */
     private double protein;
+
+    /** Total carbohydrates in grams. */
     private double carbs;
+
+    /** Total fat in grams. */
     private double fat;
 
-    // Constructor - creates a new meal with just a name
-    // e.g. Meal breakfast = new Meal("Scrambled Eggs");
-    public Meal(String name){
-
-        // Generate a random, unique ID for this meal
+    /**
+     * Constructs a new Meal with the specified name.
+     * Automatically assigns a unique ID and sets the current date.
+     * All nutrition values are initialized to zero by default.
+     *
+     * @param name the name of the meal
+     */
+    public Meal(String name) {
         this.id = UUID.randomUUID();
-
-        // Set the date to right now (when the meal was created)
         this.date = new Date();
-
-        // Set the name provided by whoever creates the object
         this.name = name;
-
-        // Initialize all nutrition values to 0 by default
-        // User can set these later with setters
         this.calories = 0;
         this.protein = 0.0;
         this.carbs = 0.0;
         this.fat = 0.0;
-
     }
 
-
-    // Returns all the macros as a simple string
-    // Makes it easy to display or log the nutrition info
-    public String getTotalMacros(){
-
-        // Build a string with all the macro values
-        String macros = "Protein: " + protein + "g, Fat: " + fat + "g, Carbs: " + carbs + "g";
-
-        // Return the formatted string
-        return macros;
-
+    /**
+     * Returns a formatted string containing all macronutrient values.
+     *
+     * @return a string representation of protein, fat, and carbs
+     */
+    public String getTotalMacros() {
+        return "Protein: " + protein + "g, Fat: " + fat + "g, Carbs: " + carbs + "g";
     }
 
-
-    // Print out a nice summary of the meal
-    // Gets called automatically when you do System.out.println(meal)
-    public String toString(){
+    /**
+     * Returns a readable summary of the meal.
+     * Automatically called when printing the object.
+     *
+     * @return a formatted string with meal name, calories, and macros
+     */
+    @Override
+    public String toString() {
         return name + " - " + calories + " calories (" +
                 protein + "g protein, " + carbs + "g carbs, " + fat + "g fat)";
     }
 
-
-    // GETTERS + SETTERS
-
-    public UUID getId(){
+    /**
+     * Gets the unique ID of the meal.
+     * @return the meal ID
+     */
+    public UUID getId() {
         return id;
     }
 
-    public Date getDate(){
+    /**
+     * Gets the date when the meal was created or logged.
+     * @return the meal date
+     */
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Date date){
+    /**
+     * Sets the date for this meal.
+     * @param date the new date
+     */
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getName(){
+    /**
+     * Gets the name of the meal.
+     * @return the meal name
+     */
+    public String getName() {
         return name;
     }
 
-    public void setName(String name){
+    /**
+     * Sets the name of the meal.
+     * @param name the new name
+     */
+    public void setName(String name) {
         this.name = name;
     }
 
-    public int getCalories(){
+    /**
+     * Gets the total calories of the meal.
+     * @return the calorie count
+     */
+    public int getCalories() {
         return calories;
     }
 
-    public void setCalories(int calories){
+    /**
+     * Sets the total calories for the meal.
+     * @param calories the calorie count
+     */
+    public void setCalories(int calories) {
         this.calories = calories;
     }
 
-    public double getProtein(){
+    /**
+     * Gets the amount of protein in grams.
+     * @return the protein value
+     */
+    public double getProtein() {
         return protein;
     }
 
-    public void setProtein(double protein){
+    /**
+     * Sets the amount of protein in grams.
+     * @param protein the protein value
+     */
+    public void setProtein(double protein) {
         this.protein = protein;
     }
 
-    public double getCarbs(){
+    /**
+     * Gets the amount of carbohydrates in grams.
+     * @return the carbohydrate value
+     */
+    public double getCarbs() {
         return carbs;
     }
 
-    public void setCarbs(double carbs){
+    /**
+     * Sets the amount of carbohydrates in grams.
+     * @param carbs the carbohydrate value
+     */
+    public void setCarbs(double carbs) {
         this.carbs = carbs;
     }
 
-    public double getFat(){
+    /**
+     * Gets the amount of fat in grams.
+     * @return the fat value
+     */
+    public double getFat() {
         return fat;
     }
 
-    public void setFat(double fat){
+    /**
+     * Sets the amount of fat in grams.
+     * @param fat the fat value
+     */
+    public void setFat(double fat) {
         this.fat = fat;
     }
-
-
 }

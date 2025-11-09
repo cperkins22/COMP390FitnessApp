@@ -1,24 +1,41 @@
 package com.fitnessapp;
 
-
-// Store data for ONE set (e.g. 8 reps @135 lbs)
+/**
+ * Represents a single set within an exercise.
+ * Stores the number of reps and the weight used.
+ */
 public class ExerciseSet {
 
+    /** Number of repetitions completed in this set. */
     private int reps;
+
+    /** Weight used in this set (in pounds, kilograms, etc.). */
     private float weight;
 
-    // Constructor
-    ExerciseSet(int reps, float weight){
-
+    /**
+     * Constructs a new ExerciseSet with the given reps and weight.
+     *
+     * @param reps the number of repetitions
+     * @param weight the weight used for this set
+     */
+    public ExerciseSet(int reps, float weight) {
         this.reps = reps;
         this.weight = weight;
     }
 
-    public int getReps(){
+    /**
+     * Gets the number of repetitions in this set.
+     * @return the number of reps
+     */
+    public int getReps() {
         return reps;
     }
 
-    public float getWeight(){
+    /**
+     * Gets the weight used in this set.
+     * @return the weight value
+     */
+    public float getWeight() {
         return weight;
     }
 }
