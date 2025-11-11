@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.fitness.controller.UserProfileController"
+      alignment="CENTER" spacing="20" prefWidth="500" prefHeight="600"
+      style="-fx-background-color: #f5f5f5;">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <!-- Title -->
+    <Label text="User Profile" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <Region VBox.vgrow="SOMETIMES" minHeight="20"/>
+
+    <!-- Profile Information Container -->
+    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <!-- First Name -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="First Name:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #7f8c8d;" minWidth="120"/>
+            <Label fx:id="firstNameLabel" text="-" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;"/>
+        </HBox>
+
+        <!-- Last Name -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Last Name:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #7f8c8d;" minWidth="120"/>
+            <Label fx:id="lastNameLabel" text="-" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;"/>
+        </HBox>
+
+        <!-- User ID -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="User ID:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #7f8c8d;" minWidth="120"/>
+            <Label fx:id="userIdLabel" text="-" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;"/>
+        </HBox>
+
+        <!-- Height -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Height:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #7f8c8d;" minWidth="120"/>
+            <Label fx:id="heightLabel" text="-" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;"/>
+        </HBox>
+
+        <!-- Weight -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Weight:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #7f8c8d;" minWidth="120"/>
+            <Label fx:id="weightLabel" text="-" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;"/>
+        </HBox>
+
+        <!-- BMI -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="BMI:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #7f8c8d;" minWidth="120"/>
+            <Label fx:id="bmiLabel" text="-" style="-fx-font-size: 14px; -fx-text-fill: #2c3e50;"/>
+        </HBox>
+    </VBox>
+
+    <Region VBox.vgrow="ALWAYS"/>
+
+    <!-- Logout Button -->
+    <Button fx:id="logoutButton" text="Logout" onAction="#handleLogout"
+            prefWidth="200" prefHeight="40"
+            style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
+
+</VBox>
