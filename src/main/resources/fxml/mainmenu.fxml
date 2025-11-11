@@ -7,7 +7,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" prefWidth="600" prefHeight="400" style="-fx-background-color: #f0f8ff;"> <!-- light blue background -->
+<AnchorPane xmlns:fx="http://javafx.com/fxml" prefWidth="600" prefHeight="400"
+            fx:controller="com.fitnessapp.MainMenuController"
+            style="-fx-background-color: #ADD8E6;"> <!-- light blue background -->
 
    <!-- Calories display at the top -->
    <VBox layoutX="20" layoutY="20" spacing="10">
@@ -17,12 +19,15 @@
 
    <!-- Main buttons -->
    <VBox layoutX="20" layoutY="100" spacing="15">
-      <Button text="Workout Builder" fx:id="workoutBuilderButton" prefWidth="200"/>
+      <Button text="Workout Builder" fx:id="workoutBuilderButton" prefWidth="200"
+              onAction="#handleTrackWorkoutButton"/>
       <Button text="Past Workouts" fx:id="workoutArchiveButton" prefWidth="200"/>
-      <Button text="Meal Planning" fx:id="mealPlanningButton" prefWidth="200"/>
+      <Button text="Meal Planning" fx:id="mealPlanningButton" prefWidth="200"
+              onAction="#handleTrackMealButton"/>
       <Button text="Past Meals" fx:id="mealArchiveButton" prefWidth="200"/>
       <Button text="Personal Stats" fx:id="personalStatsButton" prefWidth="200"/>
-      <Button text="Settings" fx:id="settingsButton" prefWidth="200"/>
+      <Button text="Settings" fx:id="settingsButton" prefWidth="200"
+              onAction="#handleSettingsButton"/>
    </VBox>
 
 </AnchorPane>
