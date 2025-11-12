@@ -23,4 +23,19 @@ public class LoginController {
         stage.setTitle("Main Menu");
         stage.show();
     }
+
+    @FXML
+    private void handleCreateAccount(javafx.event.ActionEvent event) throws java.io.IOException {
+        javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(
+                getClass().getResource("/fxml/create_profile.fxml")
+        );
+        javafx.scene.Scene scene = new javafx.scene.Scene(root);
+        javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource())
+                .getScene().getWindow();
+        stage.setTitle("Create Profile");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
 }

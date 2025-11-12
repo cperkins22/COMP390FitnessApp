@@ -52,6 +52,26 @@ public class User {
     }
 
     /**
+     * Constructor used when loading an existing user (e.g. from a database).
+     * Uses the provided UUID instead of generating a new one.
+     *
+     * @param id      The user's existing UUID
+     * @param firstName The first name of the user
+     * @param lastName  The last name of the user
+     * @param email     The user's email
+     * @param height    The user's height in inches
+     * @param weight    The user's weight in pounds
+     */
+    public User(UUID id, String firstName, String lastName, String email, float height, float weight) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.height = height;
+        this.weight = weight;
+    }
+
+    /**
      * Updates the user's height and weight statistics.
      * This method allows modification of physical stats for tracking fitness progress.
      * Returns an integer status code (0 for success, -1 for invalid input).

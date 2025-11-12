@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.fitnessapp.CreateProfileController"
+            prefWidth="420" prefHeight="420">
+    <children>
+        <VBox spacing="10" prefWidth="360" prefHeight="360" layoutX="30" layoutY="30">
+            <children>
+                <Label text="Create Your Profile" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+                <GridPane hgap="10" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="35"/>
+                        <ColumnConstraints percentWidth="65"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                    </rowConstraints>
+                    <children>
+                        <Label text="First Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="firstNameField" promptText="Ada" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Last Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="lastNameField" promptText="Lovelace" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField fx:id="emailField" promptText="ada@example.com" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Height (in):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <TextField fx:id="heightField" promptText="66" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                        <Label text="Weight (lb):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <TextField fx:id="weightField" promptText="135" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    </children>
+                </GridPane>
+
+                <HBox spacing="10">
+                    <Button text="Cancel" onAction="#handleCancel"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="Save Profile" defaultButton="true" onAction="#handleSave"/>
+                </HBox>
+            </children>
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+        </VBox>
+    </children>
+</AnchorPane>
