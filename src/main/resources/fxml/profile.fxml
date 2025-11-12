@@ -66,9 +66,4 @@
 
     <Region VBox.vgrow="ALWAYS"/>
 
-    <!-- Logout Button -->
-    <Button fx:id="logoutButton" text="Logout" onAction="#handleLogout"
-            prefWidth="200" prefHeight="40"
-            style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
-
 </VBox>

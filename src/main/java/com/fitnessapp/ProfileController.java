@@ -56,14 +56,4 @@ public class ProfileController implements Initializable {
     private String safe(String s) { return s == null ? "" : s; }
     private String safeUUID(UUID id) { return id == null ? "" : id.toString(); }
 
-    @FXML
-    private void handleLogout(ActionEvent event) throws IOException {
-        Session.clear();  // forget current user
-        Parent login = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
-        Scene scene = new Scene(login);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Login");
-        stage.setScene(scene);
-        stage.show();
-    }
 }
