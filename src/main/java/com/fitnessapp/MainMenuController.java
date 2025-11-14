@@ -50,4 +50,13 @@ public class MainMenuController {
         stage.show();
     }
 
+    @FXML
+    private void handleProfileButton(ActionEvent event) throws IOException {
+        Parent profile = FXMLLoader.load(getClass().getResource("/fxml/profile.fxml"));
+        Scene scene = new Scene(profile);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Profile");
+        stage.setScene(scene);
+        stage.show();
+    }
 }

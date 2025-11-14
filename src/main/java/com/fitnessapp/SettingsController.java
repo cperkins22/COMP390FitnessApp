@@ -25,4 +25,17 @@ public class SettingsController {
         stage.show();
     }
 
+    @FXML
+    private void handleLogout(ActionEvent event) throws IOException {
+        // Clear the current user session
+        Session.clear();
+
+        Parent login = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+        Scene scene = new Scene(login);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Select Profile");
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }

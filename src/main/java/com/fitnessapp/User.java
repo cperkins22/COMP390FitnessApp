@@ -18,6 +18,7 @@ public class User {
     private String email;
     private float height;
     private float weight;
+    private String pin;
 
     /**
      * Creates a User with auto-generated UUID.
@@ -30,6 +31,7 @@ public class User {
         this.email = "";
         this.height = 0.0f;
         this.weight = 0.0f;
+        this.pin = "";
     }
 
     /**
@@ -39,14 +41,31 @@ public class User {
      * @param firstName The first name of the user
      * @param lastName The last name of the user
      * @param email The email address for login
+     * @param pin The 4-digit PIN for login
      * @param height The height of the user
      * @param weight The weight of the user
      */
-    public User(String firstName, String lastName, String email, float height, float weight) {
+    public User(String firstName, String lastName, String email, String pin, float height, float weight) {
         this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.pin = pin;
+        this.height = height;
+        this.weight = weight;
+    }
+
+    /**
+     * Constructor that recreates a User from stored data.
+     * Uses the provided UUID instead of generating a new one.
+     */
+    public User(UUID id, String firstName, String lastName,
+                String email, String pin, float height, float weight) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.pin = pin;
         this.height = height;
         this.weight = weight;
     }
@@ -86,6 +105,9 @@ public class User {
 
     // Getters
 
+    public String getPin(){
+        return pin;
+    }
     /**
      * Retrieves the unique identifier for this user.
      * This UUID is used to associate the user with DailyLog entries.
@@ -153,6 +175,9 @@ public class User {
 
     // Setters
 
+    public void setPin(String pin){
+        this.pin = pin;
+    }
     /**
      * Sets the first name of the user.
      *
