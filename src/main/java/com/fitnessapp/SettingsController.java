@@ -30,11 +30,10 @@ public class SettingsController {
         // Clear the current user session
         Session.clear();
 
-        // Navigate back to login screen
         Parent login = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         Scene scene = new Scene(login);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Login");
+        stage.setTitle("Select Profile");
         stage.setScene(scene);
         stage.show();
     }
