@@ -26,6 +26,8 @@ public final class Database {
 
     /**
      * Creates the users table if it doesn't exist.
+     * NOTE: If you had an old fitness.db with a different layout,
+     * delete that file so this schema can be applied cleanly.
      */
     private static void ensureSchema(Connection conn) throws SQLException {
         try (Statement st = conn.createStatement()) {
@@ -35,7 +37,7 @@ public final class Database {
                             "  first_name TEXT NOT NULL," +
                             "  last_name  TEXT NOT NULL," +
                             "  email      TEXT UNIQUE NOT NULL," +
-                            "  pin        TEXT NOT NULL," +
+                            "  pin        TEXT NOT NULL," +   // PIN instead of password
                             "  height_in  REAL NOT NULL," +   // inches
                             "  weight_lb  REAL NOT NULL" +    // pounds
                             ")"
