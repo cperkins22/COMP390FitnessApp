@@ -178,4 +178,9 @@ public class Exercise {
     public List<ExerciseSet> getSetList() {
         return setList;
     }
+
+    @Override
+    public String toString(){
+        return this.getName();
+    }
 }
