@@ -48,6 +48,26 @@ public class Meal {
     }
 
     /**
+     * Constructor for loading from database.
+     * @param id the unique ID
+     * @param date the meal date
+     * @param name the meal name
+     * @param calories total calories
+     * @param protein protein in grams
+     * @param carbs carbs in grams
+     * @param fat fat in grams
+     */
+    public Meal(UUID id, Date date, String name, int calories, double protein, double carbs, double fat) {
+        this.id = id;
+        this.date = date;
+        this.name = name;
+        this.calories = calories;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+    }
+
+    /**
      * Returns a formatted string containing all macronutrient values.
      *
      * @return a string representation of protein, fat, and carbs

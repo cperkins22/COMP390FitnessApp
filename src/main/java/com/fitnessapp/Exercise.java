@@ -63,6 +63,23 @@ public class Exercise {
     }
 
     /**
+     * Constructor for loading from database.
+     * @param id the unique ID
+     * @param name the exercise name
+     * @param description the exercise description
+     * @param sets number of sets
+     * @param repsPerSet reps per set
+     */
+    public Exercise(UUID id, String name, String description, int sets, int repsPerSet) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.sets = sets;
+        this.repsPerSet = repsPerSet;
+        this.setList = new ArrayList<>();
+    }
+
+    /**
      * Adds a set to this exercise.
      * Ignores invalid or null sets.
      *

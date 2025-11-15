@@ -69,8 +69,8 @@
                         </VBox>
                         <HBox alignment="CENTER" spacing="10.0" style="-fx-padding: 10;">
                             <children>
-                                <Button mnemonicParsing="false" prefWidth="150.0" style="-fx-font-size: 14; -fx-padding: 10;" text="Add Meal" />
-                                <Button mnemonicParsing="false" prefWidth="150.0" style="-fx-font-size: 14; -fx-padding: 10;" text="Clear" />
+                                <Button mnemonicParsing="false" prefWidth="150.0" style="-fx-font-size: 14; -fx-padding: 10;" text="Add Meal" onAction="#handleAddMeal" />
+                                <Button mnemonicParsing="false" prefWidth="150.0" style="-fx-font-size: 14; -fx-padding: 10;" text="Clear" onAction="#handleClear" />
                             </children>
                         </HBox>
                     </children>

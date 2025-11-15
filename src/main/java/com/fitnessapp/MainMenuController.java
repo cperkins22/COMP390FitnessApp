@@ -28,13 +28,13 @@ public class MainMenuController {
     @FXML
     private void handleTrackWorkoutButton(ActionEvent event) throws IOException {
         // Load the main menu FXML
-        Parent workoutParent = FXMLLoader.load(getClass().getResource("/fxml/workout_intermediate.fxml"));
+        Parent workoutParent = FXMLLoader.load(getClass().getResource("/fxml/TrackWorkout.fxml"));
         Scene workoutScene = new Scene(workoutParent);
 
         // Get the current stage (window) and set the new scene
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(workoutScene);
-        stage.setTitle("Workouts");
+        stage.setTitle("Workout");
         stage.show();
     }
     @FXML
@@ -50,13 +50,4 @@ public class MainMenuController {
         stage.show();
     }
 
-    @FXML
-    private void handleProfileButton(ActionEvent event) throws IOException {
-        Parent profile = FXMLLoader.load(getClass().getResource("/fxml/profile.fxml"));
-        Scene scene = new Scene(profile);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Profile");
-        stage.setScene(scene);
-        stage.show();
-    }
 }
