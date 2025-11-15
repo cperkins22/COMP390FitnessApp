@@ -3,6 +3,7 @@ package com.fitnessapp;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.ArrayList;
 
 /**
  * Represents a workout session containing multiple exercises.
@@ -22,6 +23,22 @@ public class Workout {
 
     /** Default constructor. */
     public Workout() {
+        this.id = UUID.randomUUID();
+        this.date = new Date();
+        this.exercises = new ArrayList<>();
+    }
+
+    /**
+     * Constructor for loading from database.
+     * @param id the unique ID
+     * @param date the workout date
+     * @param notes workout notes
+     */
+    public Workout(UUID id, Date date, String notes) {
+        this.id = id;
+        this.date = date;
+        this.notes = notes;
+        this.exercises = new ArrayList<>();
     }
 
     /**
