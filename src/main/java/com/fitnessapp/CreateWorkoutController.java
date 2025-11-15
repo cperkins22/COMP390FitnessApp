@@ -9,239 +9,87 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import javafx.util.converter.FloatStringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
+
+import javafx.scene.control.*;
+
 import java.sql.SQLException;
 
 public class CreateWorkoutController {
 
-    @FXML
-    private TextField workoutNameField;
+    @FXML private TextField workoutNameField;
+    @FXML private ListView<Exercise> exerciseListView;
+    @FXML private TableView<ExerciseSet> setTable;
+    @FXML private TableColumn<ExerciseSet, Integer> repsCol;
+    @FXML private TableColumn<ExerciseSet, Float> weightCol;
 
-    @FXML
-    private ListView<String> exerciseList;
-
-    @FXML
-    private TextArea exerciseDescriptionArea;
-
-    @FXML
-    private TableView<ExerciseSet> setTable;
-
-    @FXML
-    private TableColumn<ExerciseSet, Integer> repsCol;
-
-    @FXML
-    private TableColumn<ExerciseSet, Float> weightCol;
-
-    @FXML
-    private Button addExerciseButton;
-
-    @FXML
-    private Button removeExerciseButton;
-
-    @FXML
-    private Button addSetButton;
-
-    @FXML
-    private Button removeSetButton;
-
-    @FXML
-    private Button saveWorkoutButton;
-
-    private final WorkoutDao workoutDao = new WorkoutDao();
-
-    // The workout being created
     private Workout currentWorkout;
+    private ObservableList<Exercise> exerciseObservableList;
 
-    // Observable list for exercises (just names for display)
-    private ObservableList<String> exerciseNames;
-
-    /**
-     * Initialize the controller.
-     */
     @FXML
     public void initialize() {
-        // Create a new workout
         currentWorkout = new Workout();
+        exerciseObservableList = FXCollections.observableArrayList();
+        exerciseListView.setItems(exerciseObservableList);
 
-        // Initialize the exercise list
-        exerciseNames = FXCollections.observableArrayList();
-        exerciseList.setItems(exerciseNames);
+        repsCol.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleIntegerProperty(data.getValue().getReps()).asObject()
+        );
 
-        // Set up the table columns
-        repsCol.setCellValueFactory(new PropertyValueFactory<>("reps"));
-        weightCol.setCellValueFactory(new PropertyValueFactory<>("weight"));
+        weightCol.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleFloatProperty(data.getValue().getWeight()).asObject()
+        );
 
-        // Make the table editable
-        setTable.setEditable(true);
-        repsCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        weightCol.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
-
-        // Listen for exercise selection changes
-        exerciseList.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null && newVal.intValue() >= 0) {
-                loadSelectedExercise(newVal.intValue());
-            }
-        });
-
-        // Wire up buttons
-        addExerciseButton.setOnAction(e -> handleAddExercise());
-        removeExerciseButton.setOnAction(e -> handleRemoveExercise());
-        addSetButton.setOnAction(e -> handleAddSet());
-        removeSetButton.setOnAction(e -> handleRemoveSet());
-        saveWorkoutButton.setOnAction(e -> handleSaveWorkout());
-    }
-
-    /**
-     * Handle adding a new exercise to the workout.
-     */
-    private void handleAddExercise() {
-        // Prompt user for exercise name
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Add Exercise");
-        dialog.setHeaderText("Enter exercise name");
-        dialog.setContentText("Exercise name:");
-
-        dialog.showAndWait().ifPresent(name -> {
-            if (!name.trim().isEmpty()) {
-                // Create a new exercise
-                Exercise exercise = new Exercise(name.trim(), "");
-                currentWorkout.addExercise(exercise);
-                exerciseNames.add(name.trim());
-
-                // Select the new exercise
-                exerciseList.getSelectionModel().select(exerciseNames.size() - 1);
+        exerciseListView.getSelectionModel().selectedItemProperty().addListener((obs, old, selected) -> {
+            if (selected != null) {
+                setTable.setItems(FXCollections.observableArrayList(selected.getSetList()));
             }
         });
     }
 
-    /**
-     * Handle removing the selected exercise.
-     */
-    private void handleRemoveExercise() {
-        int selectedIndex = exerciseList.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            currentWorkout.getExercises().remove(selectedIndex);
-            exerciseNames.remove(selectedIndex);
-            exerciseDescriptionArea.clear();
-            setTable.getItems().clear();
-        }
-    }
-
-    /**
-     * Handle adding a set to the selected exercise.
-     */
-    private void handleAddSet() {
-        int selectedIndex = exerciseList.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            // Create a default set
-            ExerciseSet set = new ExerciseSet(10, 0);  // Default 10 reps, 0 weight
-            Exercise exercise = currentWorkout.getExercises().get(selectedIndex);
-            exercise.addSet(set);
-
-            // Refresh the table
-            setTable.getItems().add(set);
-        } else {
-            showAlert("Please select an exercise first!");
-        }
-    }
-
-    /**
-     * Handle removing the selected set.
-     */
-    private void handleRemoveSet() {
-        int selectedIndex = exerciseList.getSelectionModel().getSelectedIndex();
-        int selectedSetIndex = setTable.getSelectionModel().getSelectedIndex();
-
-        if (selectedIndex >= 0 && selectedSetIndex >= 0) {
-            Exercise exercise = currentWorkout.getExercises().get(selectedIndex);
-            exercise.getSetList().remove(selectedSetIndex);
-            setTable.getItems().remove(selectedSetIndex);
-        }
-    }
-
-    /**
-     * Load the selected exercise details.
-     */
-    private void loadSelectedExercise(int index) {
-        if (index >= 0 && index < currentWorkout.getExercises().size()) {
-            Exercise exercise = currentWorkout.getExercises().get(index);
-
-            // Load description
-            exerciseDescriptionArea.setText(exercise.getDescription());
-
-            // Load sets into table
-            setTable.setItems(FXCollections.observableArrayList(exercise.getSetList()));
-        }
-    }
-
-    /**
-     * Save description changes when user types in the description area.
-     */
     @FXML
-    private void handleDescriptionChanged() {
-        int selectedIndex = exerciseList.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            Exercise exercise = currentWorkout.getExercises().get(selectedIndex);
-            exercise.setDescription(exerciseDescriptionArea.getText());
+    private void addExercise() {
+        Exercise newExercise = new Exercise("New Exercise", "");
+        exerciseObservableList.add(newExercise);
+        currentWorkout.getExercises().add(newExercise);
+        exerciseListView.getSelectionModel().select(newExercise);
+    }
+
+    @FXML
+    private void removeExercise() {
+        Exercise selected = exerciseListView.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            exerciseObservableList.remove(selected);
+            currentWorkout.getExercises().remove(selected);
+            setTable.setItems(null);
         }
     }
 
-    /**
-     * Handle saving the workout to the database.
-     */
-    private void handleSaveWorkout() {
-        User currentUser = Session.getCurrentUser();
-        if (currentUser == null) {
-            showAlert("No user logged in!");
-            return;
-        }
+    @FXML
+    private void addSet() {
+        Exercise selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
+        if (selectedExercise == null) return;
 
-        // Validate workout name
-        String workoutName = workoutNameField.getText().trim();
-        if (workoutName.isEmpty()) {
-            showAlert("Please enter a workout name!");
-            return;
-        }
+        ExerciseSet set = new ExerciseSet(10, 0);
+        selectedExercise.addSet(set);
 
-        // Set workout notes to the name (or you could add a notes field)
-        currentWorkout.setNotes(workoutName);
-
-        // Check if there are any exercises
-        if (currentWorkout.getExercises().isEmpty()) {
-            showAlert("Please add at least one exercise!");
-            return;
-        }
-
-        try {
-            // Save to database
-            workoutDao.insert(currentWorkout, currentUser.getId());
-
-            // Show success message
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Workout saved successfully!");
-            alert.showAndWait();
-
-            // Go back to workout intermediate screen
-            handleBackButton(null);
-
-        } catch (SQLException e) {
-            showAlert("Error saving workout: " + e.getMessage());
-            e.printStackTrace();
-        } catch (IOException e) {
-            showAlert("Error navigating back: " + e.getMessage());
-        }
+        setTable.setItems(FXCollections.observableArrayList(selectedExercise.getSetList()));
     }
 
-    /**
-     * Show an alert dialog.
-     */
+    @FXML
+    private void removeSet() {
+        Exercise selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
+        ExerciseSet selectedSet = setTable.getSelectionModel().getSelectedItem();
+
+        if (selectedExercise == null || selectedSet == null) return;
+
+        selectedExercise.getSetList().remove(selectedSet);
+
+        setTable.setItems(FXCollections.observableArrayList(selectedExercise.getSetList()));
+    }
+
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
@@ -250,14 +98,48 @@ public class CreateWorkoutController {
     }
 
     @FXML
-    private void handleBackButton(ActionEvent event) throws IOException {
-        // Load the main menu FXML
-        Parent workoutIntermediateParent = FXMLLoader.load(getClass().getResource("/fxml/workout_intermediate.fxml"));
-        Scene workoutIntermediateScene = new Scene(workoutIntermediateParent);
+    private void saveWorkout() {
+        User currentUser = Session.getCurrentUser();
+        if (currentUser == null) {
+            showAlert("No user logged in!");
+            return;
+        }
 
-        // Get the current stage (window) and set the new scene
+        String workoutName = workoutNameField.getText().trim();
+        if (workoutName.isEmpty()) {
+            showAlert("Please enter a workout name!");
+            return;
+        }
+
+        currentWorkout.setNotes(workoutName);
+
+        if (currentWorkout.getExercises().isEmpty()) {
+            showAlert("Please add at least one exercise!");
+            return;
+        }
+
+        try {
+            WorkoutDao workoutDao = new WorkoutDao();
+            workoutDao.insert(currentWorkout, currentUser.getId());
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Workout saved successfully!");
+            alert.showAndWait();
+
+        } catch (SQLException e) {
+            showAlert("Error saving workout: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleBackButton(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("/fxml/workout_intermediate.fxml"));
+        Scene scene = new Scene(parent);
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(workoutIntermediateScene);
+        stage.setScene(scene);
         stage.setTitle("Workouts");
         stage.show();
     }
