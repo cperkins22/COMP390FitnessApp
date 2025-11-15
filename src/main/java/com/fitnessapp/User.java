@@ -16,6 +16,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String pin;
     private float height;
     private float weight;
 
@@ -28,6 +29,7 @@ public class User {
         this.firstName = "";
         this.lastName = "";
         this.email = "";
+        this.pin = "";
         this.height = 0.0f;
         this.weight = 0.0f;
     }
@@ -39,14 +41,38 @@ public class User {
      * @param firstName The first name of the user
      * @param lastName The last name of the user
      * @param email The email address for login
+     * @param pin The 4-digit PIN for authentication
      * @param height The height of the user
      * @param weight The weight of the user
      */
-    public User(String firstName, String lastName, String email, float height, float weight) {
+    public User(String firstName, String lastName, String email, String pin, float height, float weight) {
         this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.pin = pin;
+        this.height = height;
+        this.weight = weight;
+    }
+
+    /**
+     * Constructor for loading from database with UUID.
+     * Used by UserDao when retrieving users from database.
+     *
+     * @param id The unique UUID of the user
+     * @param firstName The first name of the user
+     * @param lastName The last name of the user
+     * @param email The email address
+     * @param pin The 4-digit PIN
+     * @param height The height of the user
+     * @param weight The weight of the user
+     */
+    public User(UUID id, String firstName, String lastName, String email, String pin, float height, float weight) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.pin = pin;
         this.height = height;
         this.weight = weight;
     }
@@ -134,6 +160,15 @@ public class User {
     }
 
     /**
+     * Retrieves the PIN of the user.
+     *
+     * @return The user's 4-digit PIN as a String
+     */
+    public String getPin() {
+        return pin;
+    }
+
+    /**
      * Retrieves the height of the user.
      *
      * @return The user's height in inches as a float
@@ -178,6 +213,15 @@ public class User {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * Sets the PIN of the user.
+     *
+     * @param pin The new 4-digit PIN to assign to the user
+     */
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 
     /**
