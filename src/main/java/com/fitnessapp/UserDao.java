@@ -88,6 +88,41 @@ public class UserDao {
         return result;
     }
 
+    // ---------- Update user ----------
+    public void update(User u) throws SQLException {
+        final String sql = """
+            UPDATE users
+            SET first_name = ?, last_name = ?, email = ?, pin = ?, height_in = ?, weight_lb = ?
+            WHERE id = ?
+        """;
+
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setString(1, u.getFirstName());
+            ps.setString(2, u.getLastName());
+            ps.setString(3, u.getEmail());
+            ps.setString(4, u.getPin());
+            ps.setFloat(5, u.getHeight());
+            ps.setFloat(6, u.getWeight());
+            ps.setString(7, u.getId().toString());
+
+            ps.executeUpdate();
+        }
+    }
+
+    // ---------- Delete user ----------
+    public void delete(UUID id) throws SQLException {
+        final String sql = "DELETE FROM users WHERE id = ?";
+
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setString(1, id.toString());
+            ps.executeUpdate();
+        }
+    }
+
     // ---------- PIN validation ----------
     public boolean validatePin(UUID id, String pin) throws SQLException {
         final String sql = "SELECT 1 FROM users WHERE id = ? AND pin = ?";

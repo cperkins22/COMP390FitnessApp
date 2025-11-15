@@ -29,6 +29,19 @@ public class Workout {
     }
 
     /**
+     * Constructor for loading from database.
+     * @param id the unique ID
+     * @param date the workout date
+     * @param notes workout notes
+     */
+    public Workout(UUID id, Date date, String notes) {
+        this.id = id;
+        this.date = date;
+        this.notes = notes;
+        this.exercises = new ArrayList<>();
+    }
+
+    /**
      * Gets the workout ID.
      * @return the workout ID
      */
