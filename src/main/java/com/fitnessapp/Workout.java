@@ -15,6 +15,9 @@ public class Workout {
     /** Date of the workout. */
     private Date date;
 
+    /** The name of the workout.*/
+    private String name;
+
     /** Optional notes about the workout. */
     private String notes;
 
@@ -26,7 +29,15 @@ public class Workout {
         this.id = UUID.randomUUID();
         this.date = new Date();
         this.exercises = new ArrayList<>();
+        this.name = "Workout " + this.getId().toString();
     }
+    public Workout(String name) {
+        this.id = UUID.randomUUID();
+        this.date = new Date();
+        this.exercises = new ArrayList<>();
+        this.name = name;
+    }
+
 
     /**
      * Constructor for loading from database.
@@ -63,6 +74,21 @@ public class Workout {
      */
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    /**
+     * Gets the name of the workout.
+     * @return the name of the workout
+     */
+    public String getName(){
+        return name;
+    }
+    /**
+     * Sets the name for the workout.
+     * @param name the name to set
+     */
+    public void setName(String name){
+        this.name = name;
     }
 
     /**
@@ -118,5 +144,10 @@ public class Workout {
             }
         }
         return total;
+    }
+
+    @Override
+    public String toString(){
+        return this.getName();
     }
 }
