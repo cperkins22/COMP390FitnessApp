@@ -6,11 +6,37 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainMenuController {
+
+    @FXML private Label caloriesLabel;
+
+    @FXML
+    public void initialize() {
+        try {
+            //Get the current user.
+            User currentUser = Session.getCurrentUser();
+            //Create a DailyLogDao object to access the database.
+            DailyLogDao dailyLogDao = new DailyLogDao();
+            // Fetch today's log (or create it if it doesn't exist)
+            DailyLog todayLog = dailyLogDao.getOrCreateToday(currentUser.getId());
+
+            // Get the total calories
+            int totalCalories = todayLog.getTotalCalories();
+
+            // Display on the label
+            caloriesLabel.setText(String.valueOf(totalCalories));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            caloriesLabel.setText("0"); // fallback
+        }
+    }
 
     @FXML
     private void handleSettingsButton(ActionEvent event) throws IOException {

@@ -68,6 +68,13 @@ public class PinController {
             stage.setScene(scene);
             stage.show();
 
+            //Create a DailyLogDao object to access the database
+            DailyLogDao dailyLogDao = new DailyLogDao();
+            // Get today's daily log object for the user that just logged in,
+            // If the user has already logged in today, it will already exist.
+            // If the user has not logged in yet today, a new DailyLog will be created.
+            DailyLog todayLog = dailyLogDao.getOrCreateToday(user.getId());
+
         } catch (SQLException e) {
             alert("Error validating PIN: " + e.getMessage());
         } catch (IOException e) {
