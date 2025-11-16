@@ -26,8 +26,8 @@ public class WorkoutDao {
     public void insert(Workout w, UUID userId) throws SQLException {
         // First insert the workout
         final String workoutSql = """
-            INSERT INTO workouts (id, user_id, date, notes)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO workouts (id, user_id, name, date, notes)
+            VALUES (?, ?, ?, ?, ?)
         """;
 
         try (Connection c = Database.getConnection();
@@ -35,8 +35,9 @@ public class WorkoutDao {
 
             ps.setString(1, w.getId().toString());
             ps.setString(2, userId.toString());
-            ps.setString(3, DATE_FORMAT.format(w.getDate()));
-            ps.setString(4, w.getNotes());
+            ps.setString(3, w.getName());
+            ps.setString(4, DATE_FORMAT.format(w.getDate()));
+            ps.setString(5, w.getNotes());
 
             ps.executeUpdate();
         }
@@ -258,6 +259,17 @@ public class WorkoutDao {
         }
     }
 
+    public void deleteAllWorkoutsForUser(UUID userId) throws SQLException {
+        String sql = "DELETE FROM workouts WHERE user_id = ?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, userId.toString());
+            ps.executeUpdate();
+        }
+    }
+
     // ---------- Mapping helpers ----------
     /**
      * Maps a database row to a Workout object.
@@ -273,7 +285,8 @@ public class WorkoutDao {
             date = new Date();
         }
         String notes = rs.getString("notes");
-        return new Workout(id, date, notes);
+        String name = rs.getString("name");
+        return new Workout(id, date, notes, name);
     }
 
     /**

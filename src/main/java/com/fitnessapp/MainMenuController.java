@@ -28,7 +28,7 @@ public class MainMenuController {
         Scene workoutScene = new Scene(workoutParent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(workoutScene);
-        stage.setTitle("Workout");
+        stage.setTitle("Workouts");
         stage.show();
     }
 

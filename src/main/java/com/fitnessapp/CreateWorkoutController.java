@@ -9,6 +9,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,6 +26,7 @@ public class CreateWorkoutController {
     @FXML private TableView<ExerciseSet> setTable;
     @FXML private TableColumn<ExerciseSet, Integer> repsCol;
     @FXML private TableColumn<ExerciseSet, Float> weightCol;
+    @FXML private TextArea exerciseDescriptionArea;
 
     private Workout currentWorkout;
     private ObservableList<Exercise> exerciseObservableList;
@@ -47,6 +50,53 @@ public class CreateWorkoutController {
                 setTable.setItems(FXCollections.observableArrayList(selected.getSetList()));
             }
         });
+
+        exerciseListView.setCellFactory(TextFieldListCell.forListView(new javafx.util.StringConverter<Exercise>() {
+            @Override
+            public String toString(Exercise exercise) {
+                return exercise.getName();
+            }
+
+            @Override
+            public Exercise fromString(String newName) {
+                Exercise selected = exerciseListView.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    selected.setName(newName);
+                }
+                return selected;
+            }
+        }));
+
+        exerciseDescriptionArea.textProperty().addListener((obs, old, newVal) -> {
+            Exercise selected = exerciseListView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                selected.setDescription(newVal);
+            }
+        });
+
+        exerciseListView.getSelectionModel().selectedItemProperty().addListener((obs, old, selected) -> {
+            if (selected != null) {
+                exerciseDescriptionArea.setText(selected.getDescription());
+                setTable.setItems(FXCollections.observableArrayList(selected.getSetList()));
+            }
+        });
+
+        setTable.setEditable(true);
+
+        repsCol.setCellFactory(TextFieldTableCell.forTableColumn(new javafx.util.converter.IntegerStringConverter()));
+        weightCol.setCellFactory(TextFieldTableCell.forTableColumn(new javafx.util.converter.FloatStringConverter()));
+
+        repsCol.setOnEditCommit(event -> {
+            ExerciseSet set = event.getRowValue();
+            set.setReps(event.getNewValue());
+        });
+
+        weightCol.setOnEditCommit(event -> {
+            ExerciseSet set = event.getRowValue();
+            set.setWeight(event.getNewValue());
+        });
+
+
     }
 
     @FXML
@@ -106,12 +156,13 @@ public class CreateWorkoutController {
         }
 
         String workoutName = workoutNameField.getText().trim();
+        //String workoutNotes = exerciseDescriptionArea.getText().trim();
         if (workoutName.isEmpty()) {
             showAlert("Please enter a workout name!");
             return;
         }
 
-        currentWorkout.setNotes(workoutName);
+        currentWorkout.setName(workoutName);
 
         if (currentWorkout.getExercises().isEmpty()) {
             showAlert("Please add at least one exercise!");
