@@ -29,7 +29,7 @@ public class DailyLog {
      */
     public DailyLog() {
         this.id = UUID.randomUUID();
-        this.date = new Date();
+        this.date = DailyLogDao.normalizeToDateOnly(new Date());
         this.totalCalories = 0;
         this.totalWorkouts = 0;
     }

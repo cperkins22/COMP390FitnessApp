@@ -2,10 +2,7 @@ package com.fitnessapp;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.Date;
 
 /**
@@ -94,17 +91,13 @@ public class DailyLogDao {
      * @param date the date to search for (only compares the date part, not time)
      */
     public Optional<DailyLog> findByUserIdAndDate(UUID userId, Date date) throws SQLException {
-        // Convert date to string for comparison (just the date part)
-        SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
-        String dateStr = dateOnly.format(date);
-
-        final String sql = "SELECT * FROM daily_logs WHERE user_id = ? AND date LIKE ?";
+        final String sql = "SELECT * FROM daily_logs WHERE user_id = ? AND date = ?";
 
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
 
             ps.setString(1, userId.toString());
-            ps.setString(2, dateStr + "%");  // Match any time on this date
+            ps.setString(2, DATE_FORMAT.format(date)); // normalized at midnight
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -115,6 +108,7 @@ public class DailyLogDao {
             }
         }
     }
+
 
     // ---------- Update ----------
     /**
@@ -177,4 +171,33 @@ public class DailyLogDao {
 
         return new DailyLog(id, date, totalCalories, totalWorkouts, notes);
     }
+
+    public DailyLog getOrCreateToday(UUID userId) throws SQLException {
+        Date today = normalizeToDateOnly(new Date());
+
+        // Check if today's log already exists
+        Optional<DailyLog> existing = findByUserIdAndDate(userId, today);
+        if (existing.isPresent()) {
+            return existing.get();
+        }
+
+        // Otherwise, create a new one
+        DailyLog newLog = new DailyLog();
+        insert(newLog, userId);
+        return newLog;
+    }
+
+    //this helper method returns a new date object with the same date as the one passed as a parameter, but sets the time
+    //to midnight. This allows for finding DailyLog objects where their date should only correspond to the specific date, not the time.
+    public static Date normalizeToDateOnly(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
+
 }
