@@ -45,11 +45,12 @@ public class Workout {
      * @param date the workout date
      * @param notes workout notes
      */
-    public Workout(UUID id, Date date, String notes) {
+    public Workout(UUID id, Date date, String notes, String name) {
         this.id = id;
         this.date = date;
         this.notes = notes;
         this.exercises = new ArrayList<>();
+        this.name = name;
     }
 
     /**

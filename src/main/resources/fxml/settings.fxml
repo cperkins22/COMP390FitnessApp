@@ -27,6 +27,7 @@
             <!-- Placeholder text for future options -->
             <Label text="Settings options will be added here"
                    style="-fx-font-size: 14px; -fx-text-fill: #555;"/>
+            <Button text="DELETE ALL WORKOUTS FOR CURRENT USER" onAction="#deleteAllWorkouts"/>
 
             <Region VBox.vgrow="ALWAYS" minHeight="150"/>
 

@@ -6,9 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class SettingsController {
 
@@ -20,6 +22,18 @@ public class SettingsController {
         stage.setScene(mainMenuScene);
         stage.setTitle("Main Menu");
         stage.show();
+    }
+
+    @FXML
+    private void deleteAllWorkouts() {
+        User currentUser = Session.getCurrentUser();
+        WorkoutDao workoutDao = new WorkoutDao();
+        try{
+            workoutDao.deleteAllWorkoutsForUser(currentUser.getId());
+        } catch (SQLException e){
+            System.out.println("ERROR DELETING WORKOUTS: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML

@@ -18,12 +18,10 @@
 
    <!-- Main buttons -->
    <VBox layoutX="20" layoutY="100" spacing="15">
-      <Button text="Workout Builder" fx:id="workoutBuilderButton" prefWidth="200"
+      <Button text="Workouts" fx:id="workoutButton" prefWidth="200"
               onAction="#handleTrackWorkoutButton"/>
-      <Button text="Past Workouts" fx:id="workoutArchiveButton" prefWidth="200"/>
-      <Button text="Meal Planning" fx:id="mealPlanningButton" prefWidth="200"
+      <Button text="Meals" fx:id="mealsButton" prefWidth="200"
               onAction="#handleTrackMealButton"/>
-      <Button text="Past Meals" fx:id="mealArchiveButton" prefWidth="200"/>
       <Button text="Personal Stats" fx:id="personalStatsButton" prefWidth="200"
               onAction="#handleProfileButton"/>
       <Button text="Settings" fx:id="settingsButton" prefWidth="200"

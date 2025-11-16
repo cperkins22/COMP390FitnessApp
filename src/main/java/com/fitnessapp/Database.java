@@ -49,6 +49,7 @@ public final class Database {
                     "CREATE TABLE IF NOT EXISTS workouts (" +
                             "  id TEXT PRIMARY KEY," +
                             "  user_id TEXT NOT NULL," +
+                            "  name TEXT," +
                             "  date TEXT NOT NULL," +         // ISO date format
                             "  notes TEXT," +
                             "  FOREIGN KEY (user_id) REFERENCES users(id)" +
@@ -77,6 +78,39 @@ public final class Database {
                             "  weight REAL NOT NULL," +
                             "  FOREIGN KEY (exercise_id) REFERENCES exercises(id)" +
                             ")"
+            );
+
+            //TRACKED TABLES (For user archives)
+
+            // Create tracked_workouts table
+            st.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS tracked_workouts (" +
+                            "id TEXT PRIMARY KEY, " +                  // workout UUID
+                            "user_id TEXT NOT NULL, " +                // user UUID, stored in DB only
+                            "workout_name TEXT NOT NULL, " +
+                            "date_completed DATETIME DEFAULT CURRENT_TIMESTAMP" +
+                            ");"
+            );
+
+            // Create tracked_exercises table
+            st.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS tracked_exercises (" +
+                            "id TEXT PRIMARY KEY, " +                  // exercise UUID
+                            "tracked_workout_id TEXT NOT NULL, " +
+                            "name TEXT NOT NULL, " +
+                            "FOREIGN KEY(tracked_workout_id) REFERENCES tracked_workouts(id) ON DELETE CASCADE" +
+                            ");"
+            );
+
+
+            // Create tracked_exercise_sets table
+            st.executeUpdate(
+                    "CREATE TABLE IF NOT EXISTS tracked_exercise_sets (" +
+                            "tracked_exercise_id TEXT NOT NULL, " +    // link to parent exercise UUID
+                            "reps INTEGER NOT NULL, " +
+                            "weight REAL NOT NULL, " +
+                            "FOREIGN KEY(tracked_exercise_id) REFERENCES tracked_exercises(id) ON DELETE CASCADE" +
+                            ");"
             );
 
             // Create meals table - each meal belongs to a user

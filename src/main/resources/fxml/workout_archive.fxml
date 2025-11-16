@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.fitnessapp.WorkoutArchiveController"
+            style="-fx-background-color: #ADD8E6;">
+
+    <!-- Top bar with title and back button -->
+    <top>
+        <HBox spacing="10" style="-fx-padding: 15;" alignment="CENTER_LEFT">
+            <Label style="-fx-font-size: 20;" text="Workout Archive" />
+            <Button text="Back" onAction="#handleBackButton"/>
+        </HBox>
+    </top>
+
+    <!-- Left side: List of past workouts -->
+    <left>
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <Label style="-fx-font-size: 16;" text="Select a Workout:" />
+            <ListView fx:id="workoutListView" prefWidth="200"/>
+        </VBox>
+    </left>
+
+    <!-- Center: List of exercises in the selected workout -->
+    <center>
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <Label style="-fx-font-size: 16;" text="Exercises:" />
+            <ListView fx:id="exerciseListView" prefHeight="200"/>
+        </VBox>
+    </center>
+
+    <!-- Right: Table showing sets for selected exercise -->
+    <right>
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <Label style="-fx-font-size: 16;" text="Exercise Sets:" />
+            <TableView fx:id="setTable" prefWidth="300">
+                <columns>
+                    <TableColumn fx:id="setNumberCol" text="Set #" prefWidth="50"/>
+                    <TableColumn fx:id="repsCol" text="Reps" prefWidth="100"/>
+                    <TableColumn fx:id="weightCol" text="Weight" prefWidth="100"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </right>
+
+</BorderPane>
