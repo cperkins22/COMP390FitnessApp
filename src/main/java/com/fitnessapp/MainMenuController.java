@@ -58,13 +58,15 @@ public class MainMenuController {
         stage.show();
     }
 
+
     @FXML
     private void handleTrackMealButton(ActionEvent event) throws IOException {
-        Parent mealParent = FXMLLoader.load(getClass().getResource("/fxml/TrackMeal.fxml"));
+        // Navigate to meal intermediate instead of directly to TrackMeal
+        Parent mealParent = FXMLLoader.load(getClass().getResource("/fxml/meal_intermediate.fxml"));
         Scene mealScene = new Scene(mealParent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(mealScene);
-        stage.setTitle("Meal Plan");
+        stage.setTitle("Meals");
         stage.show();
     }
 

@@ -94,6 +94,19 @@ public class TrackMealController {
             // Save to database
             mealDao.insert(meal, currentUser.getId());
 
+            // Update daily log with new calorie total
+            DailyLogDao dailyLogDao = new DailyLogDao();
+            DailyLog todayLog = dailyLogDao.getOrCreateToday(currentUser.getId());
+
+            // Recalculate total calories from all meals today
+            List<Meal> todaysMeals = mealDao.findByUserIdAndDate(currentUser.getId(), new Date());
+            int totalCalories = todaysMeals.stream()
+                    .mapToInt(Meal::getCalories)
+                    .sum();
+
+            todayLog.setTotalCalories(totalCalories);
+            dailyLogDao.update(todayLog);
+
             // Clear the input fields
             clearInputFields();
 
@@ -173,17 +186,18 @@ public class TrackMealController {
         alert.showAndWait();
     }
 
+    /**
+     * Navigate back to meal intermediate screen.
+     */
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
-        // Load the main menu FXML
-        Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/fxml/mainmenu.fxml"));
-        Scene mainMenuScene = new Scene(mainMenuParent);
+        // Navigate back to meal intermediate instead of main menu
+        Parent mealIntermediateParent = FXMLLoader.load(getClass().getResource("/fxml/meal_intermediate.fxml"));
+        Scene mealIntermediateScene = new Scene(mealIntermediateParent);
 
-        // Get the current stage (window) and set the new scene
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(mainMenuScene);
-        stage.setTitle("Main Menu");
+        stage.setScene(mealIntermediateScene);
+        stage.setTitle("Meals");
         stage.show();
     }
-
 }
