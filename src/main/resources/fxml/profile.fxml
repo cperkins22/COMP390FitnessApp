@@ -48,11 +48,16 @@
                 <TextField fx:id="updateWeightField"                    GridPane.rowIndex="3" GridPane.columnIndex="2"/>
                 <Button text="Update" onAction="#handleUpdateWeight"    GridPane.rowIndex="3" GridPane.columnIndex="3"/>
 
-                <Label text="User ID:"                                  GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <Label fx:id="userIdLabel" text="-"                     GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <Label text="Weight Goal:"                              GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <Label fx:id="weightGoalLabel" text="-"                 GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <TextField fx:id="updateWeightGoalField"                GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+                <Button text="Update" onAction="#handleUpdateWeightGoal" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
 
-                <Label text="BMI:"                                      GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                <Label fx:id="bmiLabel" text="-"                        GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                <Label text="User ID:"                                  GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <Label fx:id="userIdLabel" text="-"                     GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                <Label text="BMI:"                                      GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <Label fx:id="bmiLabel" text="-"                        GridPane.rowIndex="6" GridPane.columnIndex="1"/>
             </children>
         </GridPane>
 
