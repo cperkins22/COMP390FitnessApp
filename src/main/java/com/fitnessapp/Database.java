@@ -40,7 +40,8 @@ public final class Database {
                             "  email      TEXT UNIQUE NOT NULL," +
                             "  pin        TEXT NOT NULL," +   // PIN instead of password
                             "  height_in  REAL NOT NULL," +   // inches
-                            "  weight_lb  REAL NOT NULL" +    // pounds
+                            "  weight_lb  REAL NOT NULL," +   // pounds
+                            "  weight_goal_lb REAL DEFAULT 0" + // weight goal in pounds
                             ")"
             );
 

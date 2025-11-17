@@ -14,8 +14,8 @@ public class UserDao {
     // ---------- Create ----------
     public void insert(User u) throws SQLException {
         final String sql = """
-            INSERT INTO users (id, first_name, last_name, email, pin, height_in, weight_lb)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO users (id, first_name, last_name, email, pin, height_in, weight_lb, weight_goal_lb)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (Connection c = Database.getConnection();
@@ -28,6 +28,7 @@ public class UserDao {
             ps.setString(5, u.getPin());
             ps.setFloat(6, u.getHeight());
             ps.setFloat(7, u.getWeight());
+            ps.setFloat(8, u.getWeightGoal());
 
             ps.executeUpdate();
         }
@@ -92,7 +93,7 @@ public class UserDao {
     public void update(User u) throws SQLException {
         final String sql = """
             UPDATE users
-            SET first_name = ?, last_name = ?, email = ?, pin = ?, height_in = ?, weight_lb = ?
+            SET first_name = ?, last_name = ?, email = ?, pin = ?, height_in = ?, weight_lb = ?, weight_goal_lb = ?
             WHERE id = ?
         """;
 
@@ -105,7 +106,8 @@ public class UserDao {
             ps.setString(4, u.getPin());
             ps.setFloat(5, u.getHeight());
             ps.setFloat(6, u.getWeight());
-            ps.setString(7, u.getId().toString());
+            ps.setFloat(7, u.getWeightGoal());
+            ps.setString(8, u.getId().toString());
 
             ps.executeUpdate();
         }
@@ -148,7 +150,8 @@ public class UserDao {
         String pin    = rs.getString("pin");
         float height  = rs.getFloat("height_in");
         float weight  = rs.getFloat("weight_lb");
+        float weightGoal = rs.getFloat("weight_goal_lb");
 
-        return new User(id, first, last, email, pin, height, weight);
+        return new User(id, first, last, email, pin, height, weight, weightGoal);
     }
 }
