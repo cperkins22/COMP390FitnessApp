@@ -8,8 +8,7 @@
    <children>
       <Button layoutX="80.0" layoutY="147.0" mnemonicParsing="false" onAction="#handleCreateWorkoutButton" prefHeight="50.0" prefWidth="200.0" text="Create New Workout Plan" />
       <Button layoutX="320.0" layoutY="147.0" mnemonicParsing="false" onAction="#handleTrackWorkoutButton" prefHeight="50.0" prefWidth="200.0" text="Track Workout" />
-      <Button layoutX="200.0" layoutY="242.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="View Archived Workouts"
-      onAction="#handleViewArchivedWorkoutsButton"/>
+      <Button layoutX="200.0" layoutY="242.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="View Archived Workouts" />
       <Button layoutX="250.0" layoutY="45.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Home"
       onAction="#handleHomeButton"/>
    </children>

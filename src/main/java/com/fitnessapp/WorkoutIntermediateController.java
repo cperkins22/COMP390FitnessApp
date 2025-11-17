@@ -52,17 +52,17 @@ public class WorkoutIntermediateController {
         stage.show();
     }
 
-    @FXML
-    private void handleViewArchivedWorkoutsButton(ActionEvent event) throws IOException {
-        // Load the main menu FXML
-        Parent workoutArchiveParent = FXMLLoader.load(getClass().getResource("/fxml/workout_archive.fxml"));
-        Scene workoutArchiveScene = new Scene(workoutArchiveParent);
-
-        // Get the current stage (window) and set the new scene
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(workoutArchiveScene);
-        stage.setTitle("Archived Workouts");
-        stage.show();
-    }
+//    @FXML
+//    private void handleViewArchivedWorkoutsButton(ActionEvent event) throws IOException {
+//        // Load the main menu FXML
+//        Parent settingsParent = FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));
+//        Scene settingsScene = new Scene(settingsParent);
+//
+//        // Get the current stage (window) and set the new scene
+//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        stage.setScene(settingsScene);
+//        stage.setTitle("Settings");
+//        stage.show();
+//    }
 
 }
