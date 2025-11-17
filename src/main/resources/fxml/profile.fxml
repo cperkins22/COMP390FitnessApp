@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.TextField?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.fitnessapp.ProfileController"
             prefWidth="600" prefHeight="400"
@@ -27,23 +28,31 @@
             </columnConstraints>
 
             <children>
-                <Label text="First Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <Label fx:id="firstNameLabel" text="-" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="First Name:"                               GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label fx:id="firstNameLabel" text="-"                  GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <TextField fx:id="updateFirstNameField"                 GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <Button text="Update" onAction="#handleUpdateFirstName" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
 
-                <Label text="Last Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <Label fx:id="lastNameLabel" text="-" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Last Name:"                                GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label fx:id="lastNameLabel" text="-"                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <TextField fx:id="updateLastNameField"                  GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <Button text="Update" onAction="#handleUpdateLastName"  GridPane.rowIndex="1" GridPane.columnIndex="3"/>
 
-                <Label text="Height:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <Label fx:id="heightLabel" text="-" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="Height:"                                   GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Label fx:id="heightLabel" text="-"                     GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <TextField fx:id="updateHeightField"                    GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                <Button text="Update" onAction="#handleUpdateHeight"    GridPane.rowIndex="2" GridPane.columnIndex="3"/>
 
-                <Label text="Weight:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <Label fx:id="weightLabel" text="-" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <Label text="Weight:"                                   GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <Label fx:id="weightLabel" text="-"                     GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <TextField fx:id="updateWeightField"                    GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                <Button text="Update" onAction="#handleUpdateWeight"    GridPane.rowIndex="3" GridPane.columnIndex="3"/>
 
-                <Label text="User ID:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <Label fx:id="userIdLabel" text="-" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <Label text="User ID:"                                  GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <Label fx:id="userIdLabel" text="-"                     GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-                <Label text="BMI:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                <Label fx:id="bmiLabel" text="-" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                <Label text="BMI:"                                      GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <Label fx:id="bmiLabel" text="-"                        GridPane.rowIndex="5" GridPane.columnIndex="1"/>
             </children>
         </GridPane>
 
