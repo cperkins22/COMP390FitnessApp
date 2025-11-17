@@ -67,6 +67,8 @@ public class CreateWorkoutController {
             }
         }));
 
+        exerciseListView.setEditable(true);
+
         exerciseDescriptionArea.textProperty().addListener((obs, old, newVal) -> {
             Exercise selected = exerciseListView.getSelectionModel().getSelectedItem();
             if (selected != null) {
