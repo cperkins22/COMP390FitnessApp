@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.ColumnConstraints?>
+
+<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.fitnessapp.MealArchiveController"
+            style="-fx-background-color: #ADD8E6;">
+
+    <!-- Top bar with title and back button -->
+    <top>
+        <HBox spacing="10" style="-fx-padding: 15;" alignment="CENTER_LEFT">
+            <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Meal Archive" />
+            <Button text="Back" onAction="#handleBackButton"/>
+        </HBox>
+    </top>
+
+    <!-- Left side: List of dates -->
+    <left>
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Select a Date:" />
+            <ListView fx:id="dateListView" prefWidth="250" prefHeight="400"/>
+        </VBox>
+    </left>
+
+    <!-- Center: List of meals for selected date -->
+    <center>
+        <VBox spacing="10" style="-fx-padding: 15;">
+            <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Meals:" />
+            <ListView fx:id="mealListView" prefHeight="400"/>
+            <Button text="Delete Selected Meal" onAction="#handleDeleteMeal"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+        </VBox>
+    </center>
+
+    <!-- Right: Daily totals -->
+    <right>
+        <VBox spacing="15" style="-fx-padding: 15;">
+            <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Daily Totals:" />
+
+            <GridPane hgap="15" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="100"/>
+                    <ColumnConstraints minWidth="80"/>
+                </columnConstraints>
+
+                <Label text="Total Calories:" style="-fx-font-weight: bold;"
+                       GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label fx:id="totalCaloriesLabel" text="0 cal"
+                       style="-fx-font-size: 18; -fx-text-fill: #2c3e50;"
+                       GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Total Protein:" style="-fx-font-weight: bold;"
+                       GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label fx:id="totalProteinLabel" text="0g"
+                       style="-fx-font-size: 16; -fx-text-fill: #27ae60;"
+                       GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Total Carbs:" style="-fx-font-weight: bold;"
+                       GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Label fx:id="totalCarbsLabel" text="0g"
+                       style="-fx-font-size: 16; -fx-text-fill: #f39c12;"
+                       GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Total Fats:" style="-fx-font-weight: bold;"
+                       GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <Label fx:id="totalFatsLabel" text="0g"
+                       style="-fx-font-size: 16; -fx-text-fill: #e74c3c;"
+                       GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <VBox spacing="8" style="-fx-padding: 15; -fx-background-color: #ecf0f1; -fx-background-radius: 5;">
+                <Label text="Nutrition Breakdown" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
+                <Label text="• Protein: Muscle building" style="-fx-font-size: 12;"/>
+                <Label text="• Carbs: Energy source" style="-fx-font-size: 12;"/>
+                <Label text="• Fats: Essential nutrients" style="-fx-font-size: 12;"/>
+            </VBox>
+        </VBox>
+    </right>
+
+</BorderPane>
