@@ -27,6 +27,7 @@ public class ProfileController implements Initializable {
     @FXML private Label lastNameLabel;
     @FXML private Label heightLabel;
     @FXML private Label weightLabel;
+    @FXML private Label weightGoalLabel;
     @FXML private Label userIdLabel;
     @FXML private Label bmiLabel;
     //text fields for updating personal stats
@@ -34,6 +35,7 @@ public class ProfileController implements Initializable {
     @FXML private TextField updateLastNameField;
     @FXML private TextField updateHeightField;
     @FXML private TextField updateWeightField;
+    @FXML private TextField updateWeightGoalField;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -43,6 +45,7 @@ public class ProfileController implements Initializable {
             lastNameLabel.setText("-");
             heightLabel.setText("-");
             weightLabel.setText("-");
+            weightGoalLabel.setText("-");
             userIdLabel.setText("-");
             bmiLabel.setText("-");
             return;
@@ -53,6 +56,7 @@ public class ProfileController implements Initializable {
 
         heightLabel.setText(String.format("%d ft %.0f in", (int) (user.getHeight() / 12), (user.getHeight() % 12)));
         weightLabel.setText(String.format("%.0f lb", user.getWeight()));
+        weightGoalLabel.setText(String.format("%.0f lb", user.getWeightGoal()));
 
         userIdLabel.setText(safeUUID(user.getId()));
 
@@ -128,6 +132,22 @@ public class ProfileController implements Initializable {
             userDao.update(user);
             weightLabel.setText(String.format("%.0f lb", user.getWeight()));
             updateWeightField.clear();
+        } catch (SQLException e) {
+            alert("Failed to update user: " + e.getMessage());
+        }
+
+    }
+
+    @FXML
+    private void handleUpdateWeightGoal(ActionEvent event) throws IOException {
+        try{
+            System.out.println("WEIGHT GOAL UPDATED");
+            User user = Session.getCurrentUser();
+            user.setWeightGoal(Integer.parseInt(updateWeightGoalField.getText()));
+            UserDao userDao = new UserDao();
+            userDao.update(user);
+            weightGoalLabel.setText(String.format("%.0f lb", user.getWeightGoal()));
+            updateWeightGoalField.clear();
         } catch (SQLException e) {
             alert("Failed to update user: " + e.getMessage());
         }

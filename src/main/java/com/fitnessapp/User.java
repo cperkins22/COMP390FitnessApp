@@ -19,6 +19,7 @@ public class User {
     private String pin;
     private float height;
     private float weight;
+    private float weightGoal;
 
     /**
      * Creates a User with auto-generated UUID.
@@ -32,6 +33,7 @@ public class User {
         this.pin = "";
         this.height = 0.0f;
         this.weight = 0.0f;
+        this.weightGoal = 0.0f;
     }
 
     /**
@@ -53,6 +55,7 @@ public class User {
         this.pin = pin;
         this.height = height;
         this.weight = weight;
+        this.weightGoal = 0.0f;
     }
 
     /**
@@ -75,6 +78,31 @@ public class User {
         this.pin = pin;
         this.height = height;
         this.weight = weight;
+        this.weightGoal = 0.0f;
+    }
+
+    /**
+     * Constructor for loading from database with UUID and weight goal.
+     * Used by UserDao when retrieving users from database.
+     *
+     * @param id The unique UUID of the user
+     * @param firstName The first name of the user
+     * @param lastName The last name of the user
+     * @param email The email address
+     * @param pin The 4-digit PIN
+     * @param height The height of the user
+     * @param weight The weight of the user
+     * @param weightGoal The weight goal of the user
+     */
+    public User(UUID id, String firstName, String lastName, String email, String pin, float height, float weight, float weightGoal) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.pin = pin;
+        this.height = height;
+        this.weight = weight;
+        this.weightGoal = weightGoal;
     }
 
     /**
@@ -186,6 +214,15 @@ public class User {
         return weight;
     }
 
+    /**
+     * Retrieves the weight goal of the user.
+     *
+     * @return The user's weight goal in pounds as a float
+     */
+    public float getWeightGoal() {
+        return weightGoal;
+    }
+
     // Setters
 
     /**
@@ -243,6 +280,15 @@ public class User {
     }
 
     /**
+     * Sets the weight goal of the user.
+     *
+     * @param weightGoal The new weight goal value in pounds to assign to the user
+     */
+    public void setWeightGoal(float weightGoal) {
+        this.weightGoal = weightGoal;
+    }
+
+    /**
      * Returns a string representation of the User object.
      * Includes all user information and calculated BMI for debugging purposes.
      *
@@ -257,6 +303,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", height=" + height +
                 ", weight=" + weight +
+                ", weightGoal=" + weightGoal +
                 ", BMI=" + String.format("%.2f", getBMI()) +
                 '}';
     }
