@@ -18,6 +18,9 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
+/**
+ * This class creates a profile and assigns certain traits to it for later trackage and usage (name, height, weight, ID, etc.)
+ */
 public class ProfileController implements Initializable {
 
     @FXML private Label firstNameLabel;
@@ -69,6 +72,9 @@ public class ProfileController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Below are the handlers to change certain metrics providing the user wishes to do so
+     */
     @FXML
     private void handleUpdateFirstName(ActionEvent event) throws IOException {
         try {

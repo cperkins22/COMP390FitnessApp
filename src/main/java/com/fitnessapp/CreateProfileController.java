@@ -18,6 +18,9 @@ import java.sql.SQLException;
  * Handles creation of a new user profile and saving it to the DB.
  */
 public class CreateProfileController {
+    /**
+     * Created profile fields to enter relevant values
+     */
 
     @FXML private TextField firstNameField;
     @FXML private TextField lastNameField;
@@ -27,6 +30,10 @@ public class CreateProfileController {
     @FXML private PasswordField pinField;
 
     private final UserDao userDao = new UserDao();
+
+    /**
+     * Different possible outcomes based on what the user selects to maintain integrity of program
+     */
 
     @FXML
     private void handleCancel(ActionEvent event) throws IOException {
@@ -39,6 +46,9 @@ public class CreateProfileController {
         stage.show();
     }
 
+    /**
+     * Different methods of handling variables and converting them to data types for different and later usage
+     */
     @FXML
     private void handleSave(ActionEvent event) {
         String first  = trim(firstNameField.getText());

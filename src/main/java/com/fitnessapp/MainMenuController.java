@@ -12,6 +12,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Class consisting of different handlers for different buttons to traverse throughout the app
+ */
 public class MainMenuController {
 
     @FXML private Label caloriesLabel;
@@ -38,6 +41,9 @@ public class MainMenuController {
         }
     }
 
+    /**
+     * Specific buttons are Settings, Track Workout, Track Meal, and Handle Profile
+     */
     @FXML
     private void handleSettingsButton(ActionEvent event) throws IOException {
         Parent settingsParent = FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));

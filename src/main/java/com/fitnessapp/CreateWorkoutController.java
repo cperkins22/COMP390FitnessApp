@@ -19,6 +19,9 @@ import javafx.scene.control.*;
 
 import java.sql.SQLException;
 
+/**
+ * Class is intended to guide the process of creating workouts and their important components
+ */
 public class CreateWorkoutController {
 
     @FXML private TextField workoutNameField;
@@ -31,6 +34,10 @@ public class CreateWorkoutController {
     private Workout currentWorkout;
     private ObservableList<Exercise> exerciseObservableList;
 
+
+    /**
+     * Procedure for creating a bare bones initial point to create a workout
+     */
     @FXML
     public void initialize() {
         currentWorkout = new Workout();
@@ -101,6 +108,9 @@ public class CreateWorkoutController {
 
     }
 
+    /**
+     * Different procedures for adding, removing, and saving workouts
+     */
     @FXML
     private void addExercise() {
         Exercise newExercise = new Exercise("New Exercise", "");

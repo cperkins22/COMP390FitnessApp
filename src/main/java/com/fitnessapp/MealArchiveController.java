@@ -35,6 +35,9 @@ public class MealArchiveController {
     private Map<String, List<Meal>> mealsByDate;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMM d, yyyy");
 
+    /**
+     * Sets an initial point for the meals list and establishes whether something can actually be worked with or if the list is empty
+     */
     @FXML
     public void initialize() {
         User currentUser = Session.getCurrentUser();

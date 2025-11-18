@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Class meant to support the Tracked Exercise Set Class
+ */
 public class TrackedExerciseSetDao {
     private Connection conn;
 

@@ -9,9 +9,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+/**
+ * Class acts as a barrier to move to the Archive Workout Window, the Create Workout Window, and the Track Workout Window
+ */
 
 
-public class WorkoutIntermediateController {
+
+
+ public class WorkoutIntermediateController {
 
     @FXML
     private void handleHomeButton(ActionEvent event) throws IOException {

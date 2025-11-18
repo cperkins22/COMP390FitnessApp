@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Class meant to support the Tracked Workout Class
+ */
 public class TrackedWorkoutDao {
     private Connection conn;
     private TrackedExerciseDao exerciseDao;

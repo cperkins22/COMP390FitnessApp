@@ -18,6 +18,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Class is where workouts will be stored for later usage
+ */
 public class WorkoutArchiveController {
 
     // ---------- FXML ----------

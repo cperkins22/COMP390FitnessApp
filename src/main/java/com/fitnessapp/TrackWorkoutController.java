@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
 
+/**
+ * Class controls how workouts are entered
+ */
 public class TrackWorkoutController {
 
     // ---------- FXML UI Elements ----------
