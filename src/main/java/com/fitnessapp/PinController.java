@@ -10,25 +10,28 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * Screen for entering the PIN for the selected user.
+ * Controller for the screen for entering the PIN for the selected user.
  */
 public class PinController {
 
+    /** Label showing the selected user's name for PIN entry. */
     @FXML private Label userLabel;
+    /** PasswordField where the user enters their PIN. */
     @FXML private PasswordField pinField;
-
+    /** Data access object for user-related database operations. */
     private final UserDao userDao = new UserDao();
-
-    // The user selected on the profile picker
+    /** The user selected on the profile picker. */
     private User user;
 
     /**
+     * Sets the selected user.
      * Called by the LoginController after loading this FXML.
+     *
+     * @param user the selected user
      */
     public void setUser(User user) {
         this.user = user;
@@ -37,6 +40,12 @@ public class PinController {
         }
     }
 
+    /**
+     * Handles the login button click.
+     * Validates the entered PIN and navigates to the main menu if correct.
+     *
+     * @param event the button click event
+     */
     @FXML
     private void handleLogin(ActionEvent event) {
         if (user == null) {
@@ -61,7 +70,7 @@ public class PinController {
             // Success: store user in Session and go to main menu
             Session.setCurrentUser(user);
 
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainmenu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/main_menu.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("Main Menu");
@@ -82,11 +91,22 @@ public class PinController {
         }
     }
 
+    /**
+     * Handles the back button click.
+     * Navigates back to the profile picker screen.
+     *
+     * @param event the button click event
+     */
     @FXML
     private void handleBack(ActionEvent event) {
         goBackToLogin(event);
     }
 
+    /**
+     * Helper to navigate back to the profile picker screen.
+     *
+     * @param event the button click event
+     */
     private void goBackToLogin(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
@@ -100,10 +120,15 @@ public class PinController {
         }
     }
 
+    /**
+     * Shows an error alert with the given message.
+     *
+     * @param msg the message to display
+     */
     private static void alert(String msg) {
         Alert a = new Alert(Alert.AlertType.ERROR);
         a.setHeaderText(null);
         a.setContentText(msg);
         a.showAndWait();
     }
-}
+}//class end

@@ -11,7 +11,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Comparator;
@@ -19,11 +18,12 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Class is where workouts will be stored for later usage
+ * Controller for the Workout Archive screen.
+ * Displays previously tracked workouts for the current user along with their exercises and sets.
  */
 public class WorkoutArchiveController {
 
-    // ---------- FXML ----------
+    // ---------- FXML UI ELEMENTS ----------
     @FXML private ListView<TrackedWorkout> workoutListView;
     @FXML private ListView<TrackedExercise> exerciseListView;
     @FXML private TableView<ExerciseSetRow> setTable;
@@ -31,9 +31,13 @@ public class WorkoutArchiveController {
     @FXML private TableColumn<ExerciseSetRow, Integer> repsCol;
     @FXML private TableColumn<ExerciseSetRow, Float> weightCol;
 
-    // ---------- Data ----------
+    // ---------- DATA ----------
     private ObservableList<TrackedWorkout> workouts;
 
+    /**
+     * Initializes the controller.
+     * Loads the current user's tracked workouts, sets up table columns, and defines selection behavior.
+     */
     @FXML
     public void initialize() {
         workouts = FXCollections.observableArrayList();
@@ -44,7 +48,7 @@ public class WorkoutArchiveController {
             TrackedWorkoutDao workoutDao = new TrackedWorkoutDao(conn);
             List<TrackedWorkout> loadedWorkouts = workoutDao.findByUserId(userId);
 
-            // Sort by date descending (most recent first)
+            // Sort workouts by date descending (most recent first)
             loadedWorkouts.sort(Comparator.comparing(TrackedWorkout::getDateCompleted).reversed());
             workouts.addAll(loadedWorkouts);
 
@@ -54,21 +58,21 @@ public class WorkoutArchiveController {
             e.printStackTrace();
         }
 
-        // ---------- Table columns ----------
+        // ---------- Table Columns Setup ----------
         setNumberCol.setCellValueFactory(data -> data.getValue().setNumberProperty().asObject());
         repsCol.setCellValueFactory(data -> data.getValue().repsProperty().asObject());
         weightCol.setCellValueFactory(data -> data.getValue().weightProperty().asObject());
 
-        // ---------- Workout selection ----------
+        // ---------- WORKOUT SELECTION ----------
         workoutListView.getSelectionModel().selectedItemProperty().addListener((obs, oldWorkout, newWorkout) -> {
             if (newWorkout != null) {
-                // Populate exercises for this workout
+                // Display exercises for the selected workout
                 exerciseListView.setItems(FXCollections.observableArrayList(newWorkout.getExercises()));
                 setTable.setItems(FXCollections.emptyObservableList());
             }
         });
 
-        // ---------- Exercise selection ----------
+        // ---------- EXERCISE SELECTION ----------
         exerciseListView.getSelectionModel().selectedItemProperty().addListener((obs, oldEx, newEx) -> {
             if (newEx != null) {
                 ObservableList<ExerciseSetRow> rows = FXCollections.observableArrayList();
@@ -84,6 +88,12 @@ public class WorkoutArchiveController {
         });
     }
 
+    /**
+     * Handles the "Back" button click.
+     * Navigates back to the Workout Intermediate screen.
+     * @param event the ActionEvent triggered by clicking the back button
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     private void handleBackButton(javafx.event.ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/fxml/workout_intermediate.fxml"));

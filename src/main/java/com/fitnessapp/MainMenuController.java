@@ -8,17 +8,24 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * Class consisting of different handlers for different buttons to traverse throughout the app
+ * Controller for the main menu screen.
+ * Handles navigation to different sections of the app:
+ * settings, tracking workouts, tracking meals, and viewing personal stats.
  */
 public class MainMenuController {
 
+    /** Label displaying the total calories consumed today. */
     @FXML private Label caloriesLabel;
 
+    /**
+     * Initializes the main menu screen.
+     * Fetches today's daily log for the current user and displays total calories.
+     * If an error occurs, defaults the label to 0.
+     */
     @FXML
     public void initialize() {
         try {
@@ -28,21 +35,22 @@ public class MainMenuController {
             DailyLogDao dailyLogDao = new DailyLogDao();
             // Fetch today's log (or create it if it doesn't exist)
             DailyLog todayLog = dailyLogDao.getOrCreateToday(currentUser.getId());
-
             // Get the total calories
             int totalCalories = todayLog.getTotalCalories();
-
             // Display on the label
             caloriesLabel.setText(String.valueOf(totalCalories));
 
         } catch (SQLException e) {
             e.printStackTrace();
-            caloriesLabel.setText("0"); // fallback
+            caloriesLabel.setText("0"); // defualt
         }
     }
 
     /**
-     * Specific buttons are Settings, Track Workout, Track Meal, and Handle Profile
+     * Navigates to the Settings screen.
+     *
+     * @param event the action event triggered by clicking the Settings button
+     * @throws IOException if the FXML file cannot be loaded
      */
     @FXML
     private void handleSettingsButton(ActionEvent event) throws IOException {
@@ -54,6 +62,12 @@ public class MainMenuController {
         stage.show();
     }
 
+    /**
+     * Navigates to the Workout tracking intermediate screen.
+     *
+     * @param event the action event triggered by clicking the Track Workout button
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     private void handleTrackWorkoutButton(ActionEvent event) throws IOException {
         Parent workoutParent = FXMLLoader.load(getClass().getResource("/fxml/workout_intermediate.fxml"));
@@ -64,7 +78,12 @@ public class MainMenuController {
         stage.show();
     }
 
-
+    /**
+     * Navigates to the Meal tracking intermediate screen.
+     *
+     * @param event the action event triggered by clicking the Track Meal button
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     private void handleTrackMealButton(ActionEvent event) throws IOException {
         // Navigate to meal intermediate instead of directly to TrackMeal
@@ -76,6 +95,12 @@ public class MainMenuController {
         stage.show();
     }
 
+    /**
+     * Navigates to the user's personal stats screen.
+     *
+     * @param event the action event triggered by clicking the Profile button
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     private void handleProfileButton(ActionEvent event) throws IOException {
         Parent profile = FXMLLoader.load(getClass().getResource("/fxml/profile.fxml"));
@@ -85,5 +110,5 @@ public class MainMenuController {
         stage.setScene(scene);
         stage.show();
     }
-}
+}//class end
 

@@ -12,31 +12,43 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-
-import javafx.scene.control.*;
-
 import java.sql.SQLException;
 
 /**
- * Class is intended to guide the process of creating workouts and their important components
+ * A controller class for the CreateWorkout screen.
+ * Handles adding exercises, sets, descriptions, and saving the workout plan for the current user.
  */
 public class CreateWorkoutController {
 
+    /** Field for entering the workout name. */
     @FXML private TextField workoutNameField;
+
+    /** List of exercises currently included in the workout. */
     @FXML private ListView<Exercise> exerciseListView;
+
+    /** Table displaying all sets for the selected exercise. */
     @FXML private TableView<ExerciseSet> setTable;
+
+    /** Column for displaying reps of a set. */
     @FXML private TableColumn<ExerciseSet, Integer> repsCol;
+
+    /** Column for displaying weight of a set. */
     @FXML private TableColumn<ExerciseSet, Float> weightCol;
+
+    /** Field for entering a description for the selected exercise. */
     @FXML private TextArea exerciseDescriptionArea;
 
+    /** Workout currently being created. */
     private Workout currentWorkout;
+
+    /** Observable list backing the exercise ListView. */
     private ObservableList<Exercise> exerciseObservableList;
 
 
     /**
-     * Procedure for creating a bare bones initial point to create a workout
+     * Initializes the screen, configures cell factories, selection listeners,
+     * and prepares a new workout.
      */
     @FXML
     public void initialize() {
@@ -104,12 +116,10 @@ public class CreateWorkoutController {
             ExerciseSet set = event.getRowValue();
             set.setWeight(event.getNewValue());
         });
-
-
     }
 
     /**
-     * Different procedures for adding, removing, and saving workouts
+     * Adds a new exercise with a default name and selects it.
      */
     @FXML
     private void addExercise() {
@@ -119,6 +129,9 @@ public class CreateWorkoutController {
         exerciseListView.getSelectionModel().select(newExercise);
     }
 
+    /**
+     * Removes the selected exercise from the workout.
+     */
     @FXML
     private void removeExercise() {
         Exercise selected = exerciseListView.getSelectionModel().getSelectedItem();
@@ -129,6 +142,9 @@ public class CreateWorkoutController {
         }
     }
 
+    /**
+     * Adds a default set (10 reps, 0 weight) to the selected exercise.
+     */
     @FXML
     private void addSet() {
         Exercise selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
@@ -140,6 +156,9 @@ public class CreateWorkoutController {
         setTable.setItems(FXCollections.observableArrayList(selectedExercise.getSetList()));
     }
 
+    /**
+     * Removes the selected set from the selected exercise.
+     */
     @FXML
     private void removeSet() {
         Exercise selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
@@ -152,32 +171,30 @@ public class CreateWorkoutController {
         setTable.setItems(FXCollections.observableArrayList(selectedExercise.getSetList()));
     }
 
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
+    /**
+     * Saves the workout for the current user after validating its name and content.
+     *
+     * @throws RuntimeException if an unexpected error occurs
+     */
     @FXML
     private void saveWorkout() {
         User currentUser = Session.getCurrentUser();
         if (currentUser == null) {
-            showAlert("No user logged in!");
+            alert("No user logged in!");
             return;
         }
 
         String workoutName = workoutNameField.getText().trim();
         //String workoutNotes = exerciseDescriptionArea.getText().trim();
         if (workoutName.isEmpty()) {
-            showAlert("Please enter a workout name!");
+            alert("Please enter a workout name!");
             return;
         }
 
         currentWorkout.setName(workoutName);
 
         if (currentWorkout.getExercises().isEmpty()) {
-            showAlert("Please add at least one exercise!");
+            alert("Please add at least one exercise!");
             return;
         }
 
@@ -191,11 +208,17 @@ public class CreateWorkoutController {
             alert.showAndWait();
 
         } catch (SQLException e) {
-            showAlert("Error saving workout: " + e.getMessage());
+            alert("Error saving workout: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
+    /**
+     * Navigates the user back to the Workout Intermediate screen.
+     *
+     * @param event the action event triggered by clicking the back button
+     * @throws IOException if the destination screen's FXML fails to load
+     */
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/fxml/workout_intermediate.fxml"));
@@ -205,5 +228,17 @@ public class CreateWorkoutController {
         stage.setScene(scene);
         stage.setTitle("Workouts");
         stage.show();
+    }
+
+    /**
+     * Shows an error alert dialog with the provided message.
+     * Helper method to easily display an alert.
+     * @param msg the message to display in the alert
+     */
+    private static void alert(String msg) {
+        var a = new Alert(Alert.AlertType.ERROR);
+        a.setHeaderText(null);
+        a.setContentText(msg);
+        a.showAndWait();
     }
 }

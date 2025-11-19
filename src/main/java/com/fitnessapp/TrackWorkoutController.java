@@ -18,29 +18,55 @@ import java.io.IOException;
 import java.sql.Connection;
 
 /**
- * Class controls how workouts are entered
+ * Controller for tracking workouts.
+ * Handles displaying available workouts, exercises, and sets.
+ * Allows the user to edit sets, add/remove sets, and save a tracked workout.
  */
 public class TrackWorkoutController {
 
     // ---------- FXML UI Elements ----------
+
+    /** Dropdown to select a workout */
     @FXML private ComboBox<Workout> workoutSelector;
+
+    /** List of exercises for the selected workout */
     @FXML private ListView<Exercise> exerciseList;
+
+    /** Table to display exercise sets */
     @FXML private TableView<ExerciseSet> setTable;
+
+    /** Table column for set index */
     @FXML private TableColumn<ExerciseSet, Integer> setCol;
+
+    /** Table column for number of reps */
     @FXML private TableColumn<ExerciseSet, Integer> repsCol;
+
+    /** Table column for weight lifted */
     @FXML private TableColumn<ExerciseSet, Float> weightCol;
 
+    /** Button to add a new set to an exercise */
     @FXML private Button addSetButton;
+
+    /** Button to remove a selected set from an exercise */
     @FXML private Button removeSetButton;
+
+    /** Button to complete and save the tracked workout */
     @FXML private Button completeWorkoutButton;
 
     // ---------- Data ----------
+
+    /** List of workouts available for the current user */
     private ObservableList<Workout> availableWorkouts;
+
+    /** Currently active workout selected in the UI */
     private Workout activeWorkout;
 
+    /**
+     * Initializes the controller.
+     * Loads workouts from the database and sets up UI bindings and listeners.
+     */
     @FXML
     public void initialize() {
-        // Load current user
         User currentUser = Session.getCurrentUser();
         if (currentUser == null) {
             System.out.println("ERROR: No user logged in.");
@@ -50,18 +76,15 @@ public class TrackWorkoutController {
         availableWorkouts = FXCollections.observableArrayList();
 
         try {
-            // Load workouts using your WorkoutDao (same pattern as save)
             WorkoutDao workoutDao = new WorkoutDao();
             availableWorkouts.addAll(workoutDao.findByUserId(currentUser.getId()));
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Fill ComboBox
         workoutSelector.setItems(availableWorkouts);
 
-        // When user selects a workout, show its exercises
+        // Show exercises when a workout is selected
         workoutSelector.setOnAction(event -> {
             activeWorkout = workoutSelector.getValue();
             if (activeWorkout != null) {
@@ -70,62 +93,51 @@ public class TrackWorkoutController {
             }
         });
 
-        // When user clicks an exercise, show sets
+        // Show sets when an exercise is selected
         exerciseList.getSelectionModel().selectedItemProperty().addListener((obs, oldEx, newEx) -> {
             if (newEx != null) {
                 setTable.setItems(FXCollections.observableArrayList(newEx.getSetList()));
             }
         });
 
-        //Setup column bindings
-        repsCol.setCellValueFactory(data ->
-                new SimpleIntegerProperty(data.getValue().getReps()).asObject()
-        );
+        setupTableColumns();
+    }
 
-        weightCol.setCellValueFactory(data ->
-                new SimpleFloatProperty(data.getValue().getWeight()).asObject()
-        );
+    /**
+     * Configures table column bindings and makes the setTable editable.
+     */
+    private void setupTableColumns() {
+        repsCol.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getReps()).asObject());
+        weightCol.setCellValueFactory(data -> new SimpleFloatProperty(data.getValue().getWeight()).asObject());
 
-        // Make the table editable
         setTable.setEditable(true);
 
-        // Index column
         setCol.setCellValueFactory(col -> {
             int index = setTable.getItems().indexOf(col.getValue());
             return new ReadOnlyObjectWrapper<>(index + 1);
         });
-        setCol.setEditable(false); // optional
+        setCol.setEditable(false);
 
-        // Reps column
         repsCol.setCellFactory(TextFieldTableCell.forTableColumn(new javafx.util.converter.IntegerStringConverter()));
         repsCol.setOnEditCommit(event -> {
             ExerciseSet set = event.getRowValue();
-            set.setReps(event.getNewValue()); // update model
-
-            // Set the text color of the edited cell to black (this is currently not working, will implement in a later version)
-            TableCell<ExerciseSet, Integer> cell = (TableCell<ExerciseSet, Integer>) repsCol.getCellFactory().call(repsCol);
-            cell.setStyle("-fx-font-weight: bold;");
-
+            set.setReps(event.getNewValue());
             setTable.refresh();
         });
 
-        // Weight column
         weightCol.setCellFactory(TextFieldTableCell.forTableColumn(new javafx.util.converter.FloatStringConverter()));
         weightCol.setOnEditCommit(event -> {
             ExerciseSet set = event.getRowValue();
-            set.setWeight(event.getNewValue()); // update model
-            // Set the text color of the edited cell to black (this is currently not working, will implement in a later version)
-            TableCell<ExerciseSet, Float> cell = (TableCell<ExerciseSet, Float>) weightCol.getCellFactory().call(weightCol);
-            cell.setStyle("-fx-font-weight: bold;");
-
+            set.setWeight(event.getNewValue());
             setTable.refresh();
         });
-
-
-
     }
 
-    // ---------- BUTTONS ----------
+    // ---------- Button Handlers ----------
+
+    /**
+     * Adds a new set (0 reps, 0 weight) to the selected exercise.
+     */
     @FXML
     private void addSet() {
         Exercise selected = exerciseList.getSelectionModel().getSelectedItem();
@@ -133,11 +145,13 @@ public class TrackWorkoutController {
 
         ExerciseSet newSet = new ExerciseSet(0, 0f);
         selected.getSetList().add(newSet);
-
         setTable.getItems().add(newSet);
         setTable.refresh();
     }
 
+    /**
+     * Removes the selected set from the selected exercise.
+     */
     @FXML
     private void removeSet() {
         Exercise selected = exerciseList.getSelectionModel().getSelectedItem();
@@ -150,71 +164,53 @@ public class TrackWorkoutController {
         setTable.refresh();
     }
 
+    /**
+     * Saves the tracked workout to the database.
+     * Converts exercises and sets to TrackedExercise/TrackedExerciseSet objects and uses DAOs.
+     */
     @FXML
     private void completeWorkout() {
-        // Get current user
         User currentUser = Session.getCurrentUser();
         if (currentUser == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("No user logged in");
-            alert.setContentText("Please log in before saving a workout.");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.ERROR, "No user logged in", "Please log in before saving a workout.");
             return;
         }
 
-        // Make sure a workout is selected
         if (activeWorkout == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No Workout Selected");
-            alert.setHeaderText("Select a workout first");
-            alert.setContentText("Please choose a workout from the dropdown before saving.");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.WARNING, "No Workout Selected", "Please choose a workout from the dropdown before saving.");
             return;
         }
 
         try (Connection conn = Database.getConnection()) {
-
-            // 1️⃣ Create a new TrackedWorkout
             TrackedWorkout trackedWorkout = new TrackedWorkout();
             trackedWorkout.setName(activeWorkout.getName());
 
-            // 2️⃣ Convert exercises & sets from UI to TrackedExercise & TrackedExerciseSet
             for (Exercise ex : activeWorkout.getExercises()) {
                 TrackedExercise trackedEx = new TrackedExercise();
                 trackedEx.setName(ex.getName());
-
-                // Copy sets from UI (reps & weight)
                 for (ExerciseSet set : ex.getSetList()) {
                     TrackedExerciseSet trackedSet = new TrackedExerciseSet(set.getReps(), set.getWeight());
                     trackedEx.addSet(trackedSet);
                 }
-
                 trackedWorkout.addExercise(trackedEx);
             }
 
-            // 3️⃣ Save the tracked workout to DB using DAOs
             TrackedWorkoutDao workoutDao = new TrackedWorkoutDao(conn);
             workoutDao.save(trackedWorkout, currentUser.getId());
 
-            // 4️⃣ Notify user
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Workout Saved");
-            alert.setHeaderText("Workout Completed!");
-            alert.setContentText("Your tracked workout has been saved successfully.");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.INFORMATION, "Workout Saved", "Your tracked workout has been saved successfully.");
 
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error Saving Workout");
-            alert.setHeaderText("An error occurred while saving your workout");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlert(Alert.AlertType.ERROR, "Error Saving Workout", e.getMessage());
         }
     }
 
-
+    /**
+     * Navigates back to the workout intermediate screen.
+     * @param event the back button click
+     * @throws IOException if the FXML cannot be loaded
+     */
     @FXML
     private void handleBackButton(javafx.event.ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/fxml/workout_intermediate.fxml"));
@@ -224,5 +220,18 @@ public class TrackWorkoutController {
         stage.setScene(scene);
         stage.setTitle("Workouts");
         stage.show();
+    }
+
+    /**
+     * Helper to show an alert dialog.
+     * @param type the type of alert
+     * @param header the alert header text
+     * @param content the alert content text
+     */
+    private void showAlert(Alert.AlertType type, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

@@ -14,14 +14,15 @@ import java.util.Date;
  */
 public class MealDao {
 
-    // Date format for storing dates as strings in SQLite
+    /** Date format for storing dates as strings in SQLite. */
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    // ---------- Create ----------
+    // ---------- Create ---------- //
     /**
      * Inserts a new meal into the database.
      * @param meal the meal to save
      * @param userId the ID of the user who logged this meal
+     * @throws SQLException if a database access error occurs
      */
     public void insert(Meal meal, UUID userId) throws SQLException {
         final String sql = """
@@ -48,6 +49,10 @@ public class MealDao {
     // ---------- Read single meal ----------
     /**
      * Finds a meal by its ID.
+     *
+     * @param id the UUID of the meal
+     * @return an Optional containing the meal if found, or empty if not found
+     * @throws SQLException if a database access error occurs
      */
     public Optional<Meal> findById(UUID id) throws SQLException {
         final String sql = "SELECT * FROM meals WHERE id = ?";
@@ -69,6 +74,10 @@ public class MealDao {
 
     /**
      * Finds all meals for a specific user.
+     *
+     * @param userId the user UUID
+     * @return a list of meals for the user
+     * @throws SQLException if a database access error occurs
      */
     public List<Meal> findByUserId(UUID userId) throws SQLException {
         final String sql = "SELECT * FROM meals WHERE user_id = ? ORDER BY date DESC";
@@ -92,8 +101,12 @@ public class MealDao {
 
     /**
      * Finds all meals for a user on a specific date.
-     * @param userId the user ID
-     * @param date the date to search for (only compares the date part, not time)
+     * Only compares the date portion, ignoring the time.
+     *
+     * @param userId the user UUID
+     * @param date the date to search for
+     * @return a list of meals on the specified date
+     * @throws SQLException if a database access error occurs
      */
     public List<Meal> findByUserIdAndDate(UUID userId, Date date) throws SQLException {
         // Convert date to string for comparison (just the date part)
@@ -120,9 +133,13 @@ public class MealDao {
         return result;
     }
 
-    // ---------- Update ----------
+    // ---------- Update ---------- //
+
     /**
-     * Updates meal information.
+     * Updates a meal in the database.
+     *
+     * @param meal the meal to update
+     * @throws SQLException if a database access error occurs
      */
     public void update(Meal meal) throws SQLException {
         final String sql = """
@@ -147,8 +164,12 @@ public class MealDao {
     }
 
     // ---------- Delete ----------
+
     /**
      * Deletes a meal from the database.
+     *
+     * @param id the UUID of the meal to delete
+     * @throws SQLException if a database access error occurs
      */
     public void delete(UUID id) throws SQLException {
         final String sql = "DELETE FROM meals WHERE id = ?";
@@ -162,8 +183,13 @@ public class MealDao {
     }
 
     // ---------- Helper ----------
+
     /**
      * Maps a database row to a Meal object.
+     *
+     * @param rs the ResultSet positioned at the row to map
+     * @return the corresponding Meal object
+     * @throws SQLException if a database access error occurs
      */
     private Meal mapRow(ResultSet rs) throws SQLException {
         UUID id = UUID.fromString(rs.getString("id"));
@@ -185,4 +211,4 @@ public class MealDao {
 
         return new Meal(id, date, name, calories, protein, carbs, fat);
     }
-}
+}//class end

@@ -10,18 +10,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * Handles creation of a new user profile and saving it to the DB.
+ * A controller class for the CreateProfile screen.
+ * Handles creation of a new user profile and saving it to the database.
  */
 public class CreateProfileController {
     /**
-     * Created profile fields to enter relevant values
+     * JavaFX fields for the user to fill out
      */
-
     @FXML private TextField firstNameField;
     @FXML private TextField lastNameField;
     @FXML private TextField emailField;
@@ -29,12 +28,15 @@ public class CreateProfileController {
     @FXML private TextField weightField;
     @FXML private PasswordField pinField;
 
+    /** User database access object to communicate with the database */
     private final UserDao userDao = new UserDao();
 
     /**
-     * Different possible outcomes based on what the user selects to maintain integrity of program
+     * Handles the cancel action and returns the user to the profile picker (login screen).
+     *
+     * @param event the event triggered by clicking the cancel button
+     * @throws IOException if the login FXML file cannot be loaded
      */
-
     @FXML
     private void handleCancel(ActionEvent event) throws IOException {
         // Go back to profile picker (login.fxml)
@@ -47,7 +49,10 @@ public class CreateProfileController {
     }
 
     /**
-     * Different methods of handling variables and converting them to data types for different and later usage
+     * Validates user input, constructs a {@link User} object, saves it using the DAO,
+     * and navigates back to the login screen on success.
+     *
+     * @param event the event triggered by the save button
      */
     @FXML
     private void handleSave(ActionEvent event) {
@@ -96,16 +101,33 @@ public class CreateProfileController {
         }
     }
 
+    /**
+     * Trims leading and trailing whitespace from the given string.
+     *
+     * @param s the string to trim; may be null
+     * @return a trimmed string, or an empty string if {@code s} is null
+     */
     private static String trim(String s) { return s == null ? "" : s.trim(); }
 
+    /**
+     * Attempts to parse a string into a Float.
+     *
+     * @param s the string to parse
+     * @return the parsed float value, or {@code null} if parsing fails
+     */
     private static Float parseFloat(String s) {
         try { return Float.parseFloat(s.trim()); } catch (Exception e) { return null; }
     }
 
+    /**
+     * Shows an error alert dialog with the provided message.
+     * Helper method to easily display an alert.
+     * @param msg the message to display in the alert
+     */
     private static void alert(String msg) {
         var a = new Alert(Alert.AlertType.ERROR);
         a.setHeaderText(null);
         a.setContentText(msg);
         a.showAndWait();
     }
-}
+}//class end

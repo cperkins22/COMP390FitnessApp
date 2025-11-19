@@ -11,22 +11,27 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Acts as the profile picker screen.
- * Shows all users and lets you pick one, then go to PIN entry.
+ * Controller for the profile picker screen.
+ * Shows all users and lets user pick one, then go to PIN entry.
  */
 public class LoginController {
 
-    @FXML
-    private ListView<User> userListView;
+    /** List view displaying all users for selection. */
+    @FXML private ListView<User> userListView;
 
+    /** Data access object for fetching users from the database. */
     private final UserDao userDao = new UserDao();
 
+    /**
+     * Initializes the login screen.
+     * Loads all users from the database into the ListView
+     * and sets up a custom cell to display first and last names.
+     */
     @FXML
     private void initialize() {
         // Load all users from DB into the ListView
@@ -47,14 +52,16 @@ public class LoginController {
                     }
                 }
             });
-
         } catch (SQLException e) {
             alert("Failed to load users: " + e.getMessage());
         }
     }
 
     /**
-     * Opens the Create Profile screen.
+     * Opens the Create Profile screen on account creation.
+     *
+     * @param event the action event triggered by clicking the button
+     * @throws IOException if the FXML file cannot be loaded
      */
     @FXML
     private void handleCreateAccount(ActionEvent event) throws IOException {
@@ -69,6 +76,9 @@ public class LoginController {
     /**
      * Called when the user clicks "Next".
      * If a user is selected, opens the PIN entry screen for that user.
+     *
+     * @param event the action event triggered by clicking the "Next" button
+     * @throws IOException if the FXML file cannot be loaded
      */
     @FXML
     private void handleNext(ActionEvent event) throws IOException {
@@ -92,11 +102,14 @@ public class LoginController {
         stage.show();
     }
 
-    // Simple helper for error alerts
-    private static void alert(String msg) {
+    /**
+     * Simple error to display alerts.
+     *
+     * @param msg the message to display
+     */    private static void alert(String msg) {
         Alert a = new Alert(Alert.AlertType.ERROR);
         a.setHeaderText(null);
         a.setContentText(msg);
         a.showAndWait();
-    }
+    }//class end
 }

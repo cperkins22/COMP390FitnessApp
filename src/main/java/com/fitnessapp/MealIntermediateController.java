@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 /**
@@ -18,10 +17,13 @@ public class MealIntermediateController {
 
     /**
      * Navigate back to the main menu.
+     *
+     * @param event the button click event
+     * @throws IOException if the FXML file cannot be loaded
      */
     @FXML
     private void handleHomeButton(ActionEvent event) throws IOException {
-        Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/fxml/mainmenu.fxml"));
+        Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/fxml/main_menu.fxml"));
         Scene mainMenuScene = new Scene(mainMenuParent);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -32,10 +34,13 @@ public class MealIntermediateController {
 
     /**
      * Navigate to the Track Meal screen (for adding new meals).
+     *
+     * @param event the button click event
+     * @throws IOException if the FXML file cannot be loaded
      */
     @FXML
     private void handleTrackMealButton(ActionEvent event) throws IOException {
-        Parent trackMealParent = FXMLLoader.load(getClass().getResource("/fxml/TrackMeal.fxml"));
+        Parent trackMealParent = FXMLLoader.load(getClass().getResource("/fxml/track_meal.fxml"));
         Scene trackMealScene = new Scene(trackMealParent);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -46,6 +51,9 @@ public class MealIntermediateController {
 
     /**
      * Navigate to the Meal Archive screen (for viewing past meals).
+     *
+     * @param event the button click event
+     * @throws IOException if the FXML file cannot be loaded
      */
     @FXML
     private void handleViewMealArchiveButton(ActionEvent event) throws IOException {
@@ -57,4 +65,4 @@ public class MealIntermediateController {
         stage.setTitle("Meal Archive");
         stage.show();
     }
-}
+}//class end

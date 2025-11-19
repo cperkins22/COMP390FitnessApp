@@ -11,14 +11,15 @@ import java.util.Date;
  */
 public class DailyLogDao {
 
-    // Date format for storing dates as strings in SQLite
+    /** Date format for storing dates as strings in SQLite */
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    // ---------- Create ----------
+    // ---------- Create ----------//
     /**
      * Inserts a new daily log into the database.
      * @param log the daily log to save
      * @param userId the ID of the user who owns this log
+     * @throws SQLException if a database error occurs
      */
     public void insert(DailyLog log, UUID userId) throws SQLException {
         final String sql = """
@@ -43,6 +44,7 @@ public class DailyLogDao {
     // ---------- Read single log ----------
     /**
      * Finds a daily log by its ID.
+     * @throws SQLException if a database error occurs
      */
     public Optional<DailyLog> findById(UUID id) throws SQLException {
         final String sql = "SELECT * FROM daily_logs WHERE id = ?";
@@ -64,6 +66,8 @@ public class DailyLogDao {
 
     /**
      * Finds all daily logs for a specific user.
+     * @param userId the userId to search by
+     * @throws SQLException if a database error occurs
      */
     public List<DailyLog> findByUserId(UUID userId) throws SQLException {
         final String sql = "SELECT * FROM daily_logs WHERE user_id = ? ORDER BY date DESC";
@@ -89,6 +93,7 @@ public class DailyLogDao {
      * Finds a daily log for a user on a specific date.
      * @param userId the user ID
      * @param date the date to search for (only compares the date part, not time)
+     * @throws SQLException if a database error occurs
      */
     public Optional<DailyLog> findByUserIdAndDate(UUID userId, Date date) throws SQLException {
         final String sql = "SELECT * FROM daily_logs WHERE user_id = ? AND date = ?";
@@ -109,10 +114,11 @@ public class DailyLogDao {
         }
     }
 
-
-    // ---------- Update ----------
+    // ---------- Update ----------//
     /**
      * Updates a daily log.
+     * @param log the DailyLog to update
+     * @throws SQLException if a database error occurs
      */
     public void update(DailyLog log) throws SQLException {
         final String sql = """
@@ -134,9 +140,11 @@ public class DailyLogDao {
         }
     }
 
-    // ---------- Delete ----------
+    // ---------- Delete ----------//
     /**
      * Deletes a daily log from the database.
+     * @param id the id of the log to delete
+     * @throws SQLException if a database error occurs
      */
     public void delete(UUID id) throws SQLException {
         final String sql = "DELETE FROM daily_logs WHERE id = ?";
@@ -149,9 +157,13 @@ public class DailyLogDao {
         }
     }
 
-    // ---------- Helper ----------
+    // ---------- Helper ----------//
     /**
-     * Maps a database row to a DailyLog object.
+     * Maps a ResultSet row to a DailyLog object.
+     *
+     * @param rs the ResultSet pointing to the current row
+     * @return a DailyLog object with values from the row
+     * @throws SQLException if a database access error occurs
      */
     private DailyLog mapRow(ResultSet rs) throws SQLException {
         UUID id = UUID.fromString(rs.getString("id"));
@@ -172,6 +184,13 @@ public class DailyLogDao {
         return new DailyLog(id, date, totalCalories, totalWorkouts, notes);
     }
 
+    /**
+     * Returns the daily log for today for the user, creating one if it does not exist.
+     *
+     * @param userId the ID of the user
+     * @return the DailyLog for today
+     * @throws SQLException if a database error occurs
+     */
     public DailyLog getOrCreateToday(UUID userId) throws SQLException {
         Date today = normalizeToDateOnly(new Date());
 
@@ -181,14 +200,18 @@ public class DailyLogDao {
             return existing.get();
         }
 
-        // Otherwise, create a new one
+        // If not, create a new one
         DailyLog newLog = new DailyLog();
         insert(newLog, userId);
         return newLog;
     }
 
-    //this helper method returns a new date object with the same date as the one passed as a parameter, but sets the time
-    //to midnight. This allows for finding DailyLog objects where their date should only correspond to the specific date, not the time.
+    /**
+     * Normalizes a Date object to midnight (time set to 00:00:00).
+     *
+     * @param date the date to normalize
+     * @return a new Date object with the same date and time set to midnight
+     */
     public static Date normalizeToDateOnly(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -198,6 +221,4 @@ public class DailyLogDao {
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTime();
     }
-
-
-}
+}//class end

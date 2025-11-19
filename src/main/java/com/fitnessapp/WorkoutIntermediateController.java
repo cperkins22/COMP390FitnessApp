@@ -7,67 +7,64 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
+
 /**
- * Class acts as a barrier to move to the Archive Workout Window, the Create Workout Window, and the Track Workout Window
+ * Controller for the intermediate workout screen.
+ * Acts as a navigation hub for:
+ *  - Tracking a workout
+ *  - Creating a new workout
+ *  - Viewing archived workouts
+ *  - Returning to the main menu
  */
+public class WorkoutIntermediateController {
 
-
-
-
- public class WorkoutIntermediateController {
-
+    /**
+     * Navigate back to the Main Menu screen.
+     */
     @FXML
     private void handleHomeButton(ActionEvent event) throws IOException {
-        // Load the main menu FXML
-        Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/fxml/mainmenu.fxml"));
-        Scene mainMenuScene = new Scene(mainMenuParent);
-
-        // Get the current stage (window) and set the new scene
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(mainMenuScene);
-        stage.setTitle("Main Menu");
-        stage.show();
+        navigateToScene(event, "/fxml/main_menu.fxml", "Main Menu");
     }
 
+    /**
+     * Navigate to the Track Workout screen.
+     */
     @FXML
     private void handleTrackWorkoutButton(ActionEvent event) throws IOException {
-        // Load the main menu FXML
-        Parent trackWorkoutParent = FXMLLoader.load(getClass().getResource("/fxml/track_workout.fxml"));
-        Scene trackWorkoutScene = new Scene(trackWorkoutParent);
-
-        // Get the current stage (window) and set the new scene
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(trackWorkoutScene);
-        stage.setTitle("Track Workout");
-        stage.show();
+        navigateToScene(event, "/fxml/track_workout.fxml", "Track Workout");
     }
 
+    /**
+     * Navigate to the Create Workout screen.
+     */
     @FXML
     private void handleCreateWorkoutButton(ActionEvent event) throws IOException {
-        // Load the main menu FXML
-        Parent createWorkoutParent = FXMLLoader.load(getClass().getResource("/fxml/create_workout.fxml"));
-        Scene createWorkoutScene = new Scene(createWorkoutParent);
-
-        // Get the current stage (window) and set the new scene
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(createWorkoutScene);
-        stage.setTitle("Create Workout");
-        stage.show();
+        navigateToScene(event, "/fxml/create_workout.fxml", "Create Workout");
     }
 
+    /**
+     * Navigate to the Archived Workouts screen.
+     */
     @FXML
     private void handleViewArchivedWorkoutsButton(ActionEvent event) throws IOException {
-        // Load the main menu FXML
-        Parent workoutArchiveParent = FXMLLoader.load(getClass().getResource("/fxml/workout_archive.fxml"));
-        Scene workoutArchiveScene = new Scene(workoutArchiveParent);
-
-        // Get the current stage (window) and set the new scene
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(workoutArchiveScene);
-        stage.setTitle("Archived Workouts");
-        stage.show();
+        navigateToScene(event, "/fxml/workout_archive.fxml", "Archived Workouts");
     }
 
+    /**
+     * Helper method to load an FXML file and switch scenes.
+     * @param event the button click event
+     * @param fxmlPath path to the FXML resource
+     * @param title title of the new window
+     * @throws IOException if FXML loading fails
+     */
+    private void navigateToScene(ActionEvent event, String fxmlPath, String title) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource(fxmlPath));
+        Scene scene = new Scene(parent);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle(title);
+        stage.show();
+    }
 }

@@ -10,13 +10,18 @@ import java.sql.Statement;
  * and making sure the schema exists.
  */
 public final class Database {
-    // SQLite file in the working directory
+
+    /** SQLite database file in the working directory. */
     private static final String URL = "jdbc:sqlite:fitness.db";
 
+    /** Private constructor to prevent instantiation. */
     private Database() {}
 
     /**
-     * Get a new connection and ensure the schema exists.
+     * Gets a new database connection and ensures the schema exists.
+     *
+     * @return a new Connection to the SQLite database
+     * @throws SQLException if a database access error occurs
      */
     public static Connection getConnection() throws SQLException {
         Connection conn = DriverManager.getConnection(URL);
@@ -25,9 +30,13 @@ public final class Database {
     }
 
     /**
-     * Creates all database tables if they don't exist.
-     * NOTE: If you had an old fitness.db with a different layout,
-     * delete that file so this schema can be applied cleanly.
+     * Creates all database tables if they do not already exist.
+     *
+     * <p>NOTE: If an old fitness.db exists with a different schema,
+     * it may need to be deleted to apply this schema cleanly.</p>
+     *
+     * @param conn an active database connection
+     * @throws SQLException if a database access error occurs
      */
     private static void ensureSchema(Connection conn) throws SQLException {
         try (Statement st = conn.createStatement()) {

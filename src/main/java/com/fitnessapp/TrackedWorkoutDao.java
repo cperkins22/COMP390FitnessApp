@@ -9,17 +9,30 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Class meant to support the Tracked Workout Class
+ * Data access object for TrackedWorkout to communicate with the database.
+ * Provides methods to save and retrieve tracked workouts from the database.
  */
 public class TrackedWorkoutDao {
+    /** Database connection used for all operations. */
     private Connection conn;
+    /** DAO for handling exercises associated with workouts. */
     private TrackedExerciseDao exerciseDao;
 
+    /**
+     * Constructs a TrackedWorkoutDao with a database connection.
+     * @param conn the connection to the database
+     */
     public TrackedWorkoutDao(Connection conn) {
         this.conn = conn;
         this.exerciseDao = new TrackedExerciseDao(conn);
     }
 
+    /**
+     * Saves a TrackedWorkout to the database, including all its exercises.
+     * @param workout the workout to save
+     * @param userId the user ID associated with this workout
+     * @throws SQLException if a database error occurs
+     */
     public void save(TrackedWorkout workout, UUID userId) throws SQLException {
         String sql = "INSERT INTO tracked_workouts (id, user_id, workout_name, date_completed) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -35,6 +48,12 @@ public class TrackedWorkoutDao {
         }
     }
 
+    /**
+     * Finds all workouts for a specific user.
+     * @param userId the user's ID
+     * @return a list of TrackedWorkout objects
+     * @throws SQLException if a database error occurs
+     */
     public List<TrackedWorkout> findByUserId(UUID userId) throws SQLException {
         List<TrackedWorkout> workouts = new ArrayList<>();
 
@@ -63,7 +82,13 @@ public class TrackedWorkoutDao {
         return workouts;
     }
 
-    // Helper to overwrite the auto-generated UUID with the DB value
+    /**
+     * Helper method to overwrite the auto-generated workout UUID
+     * with the UUID stored in the database.
+     * @param workout the workout object
+     * @param idString the UUID string from the database
+     * @return the workout with the ID overwritten
+     */
     private TrackedWorkout overwriteWorkoutId(TrackedWorkout workout, String idString) {
         try {
             java.lang.reflect.Field field = TrackedWorkout.class.getDeclaredField("id");
@@ -74,6 +99,6 @@ public class TrackedWorkoutDao {
         }
         return workout;
     }
-}
+}//class diagram
 
 

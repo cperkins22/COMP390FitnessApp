@@ -11,7 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -19,24 +18,40 @@ import java.util.ResourceBundle;
 import java.util.UUID;
 
 /**
- * This class creates a profile and assigns certain traits to it for later trackage and usage (name, height, weight, ID, etc.)
+ * Controller for the user profile screen.
+ * Displays personal stats (name, height, weight, BMI, etc.) and allows updating them.
  */
 public class ProfileController implements Initializable {
 
+    /** Label for displaying the user's first name. */
     @FXML private Label firstNameLabel;
+    /** Label for displaying the user's last name. */
     @FXML private Label lastNameLabel;
+    /** Label for displaying the user's height. */
     @FXML private Label heightLabel;
+    /** Label for displaying the user's current weight. */
     @FXML private Label weightLabel;
+    /** Label for displaying the user's weight goal. */
     @FXML private Label weightGoalLabel;
+    /** Label for displaying the user's unique ID. */
     @FXML private Label userIdLabel;
+    /** Label for displaying the user's calculated BMI. */
     @FXML private Label bmiLabel;
-    //text fields for updating personal stats
+    /** TextField for updating the user's first name. */
     @FXML private TextField updateFirstNameField;
+    /** TextField for updating the user's last name. */
     @FXML private TextField updateLastNameField;
+    /** TextField for updating the user's height. */
     @FXML private TextField updateHeightField;
+    /** TextField for updating the user's weight. */
     @FXML private TextField updateWeightField;
+    /** TextField for updating the user's weight goal. */
     @FXML private TextField updateWeightGoalField;
 
+    /**
+     * Initializes the profile screen with the current user's data.
+     * Displays placeholders if no user is logged in.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         User user = Session.getCurrentUser();
@@ -66,9 +81,15 @@ public class ProfileController implements Initializable {
         bmiLabel.setText(String.format("%.1f", bmi));
     }
 
+    /**
+     * Handles navigation back to the main menu screen.
+     *
+     * @param event the button click event
+     * @throws IOException if FXML cannot be loaded
+     */
     @FXML
     private void handleBackToMenu(ActionEvent event) throws IOException {
-        Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/fxml/mainmenu.fxml"));
+        Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/fxml/main_menu.fxml"));
         Scene mainMenuScene = new Scene(mainMenuParent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(mainMenuScene);
@@ -77,7 +98,9 @@ public class ProfileController implements Initializable {
     }
 
     /**
-     * Below are the handlers to change certain metrics providing the user wishes to do so
+     * Updates the user's first name in both session and database.
+     *
+     * @param event the button click event
      */
     @FXML
     private void handleUpdateFirstName(ActionEvent event) throws IOException {
@@ -93,6 +116,12 @@ public class ProfileController implements Initializable {
             alert("Failed to update user: " + e.getMessage());
         }
     }
+
+    /**
+     * Updates the user's last name in both session and database.
+     *
+     * @param event the button click event
+     */
     @FXML
     private void handleUpdateLastName(ActionEvent event) throws IOException {
         try {
@@ -106,8 +135,13 @@ public class ProfileController implements Initializable {
         } catch (SQLException e) {
             alert("Failed to update user: " + e.getMessage());
         }
-
     }
+
+    /**
+     * Updates the user's height in both session and database.
+     *
+     * @param event the button click event
+     */
     @FXML
     private void handleUpdateHeight(ActionEvent event) throws IOException {
         try {
@@ -122,6 +156,12 @@ public class ProfileController implements Initializable {
             alert("Failed to update user: " + e.getMessage());
         }
     }
+
+    /**
+     * Updates the user's weight in both session and database.
+     *
+     * @param event the button click event
+     */
     @FXML
     private void handleUpdateWeight(ActionEvent event) throws IOException {
         try{
@@ -138,6 +178,11 @@ public class ProfileController implements Initializable {
 
     }
 
+    /**
+     * Updates the user's weight goal in both session and database.
+     *
+     * @param event the button click event
+     */
     @FXML
     private void handleUpdateWeightGoal(ActionEvent event) throws IOException {
         try{
@@ -151,19 +196,32 @@ public class ProfileController implements Initializable {
         } catch (SQLException e) {
             alert("Failed to update user: " + e.getMessage());
         }
-
     }
-
+    /**
+     * Returns a non-null string for display.
+     *
+     * @param s the string to check
+     * @return the original string if non-null, otherwise an empty string
+     */
     private String safe(String s) {
         return s == null ? "" : s;
     }
 
+    /**
+     * Returns a non-null string representation of a UUID.
+     *
+     * @param id the UUID to check
+     * @return the UUID string if non-null, otherwise an empty string
+     */
     private String safeUUID(UUID id) {
         return id == null ? "" : id.toString();
     }
 
-    // Simple helper for error alerts
-    private static void alert(String msg) {
+    /**
+     * Displays an error alert with the given message.
+     *
+     * @param msg the message to display
+     */    private static void alert(String msg) {
         Alert a = new Alert(Alert.AlertType.ERROR);
         a.setHeaderText(null);
         a.setContentText(msg);

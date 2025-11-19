@@ -11,36 +11,34 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Controller for tracking meals.
+ * Allows the user to add meals, view today's meals, and update the daily calorie log.
+ */
 public class TrackMealController {
 
-    @FXML
-    private TextField foodNameInput;
-
-    @FXML
-    private TextField caloriesInput;
-
-    @FXML
-    private TextField proteinInput;
-
-    @FXML
-    private TextField carbsInput;
-
-    @FXML
-    private TextField fatsInput;
-
-    @FXML
-    private VBox mealsContainer;
-
+    /** Input field for the meal/food name */
+    @FXML private TextField foodNameInput;
+    /** Input field for calories */
+    @FXML private TextField caloriesInput;
+    /** Input field for protein (grams) */
+    @FXML private TextField proteinInput;
+    /** Input field for carbohydrates (grams) */
+    @FXML private TextField carbsInput;
+    /** Input field for fats (grams) */
+    @FXML private TextField fatsInput;
+    /** Container to display all meals added today */
+    @FXML private VBox mealsContainer;
+    /** Data access object for meals */
     private final MealDao mealDao = new MealDao();
 
     /**
-     * Initialize the controller - load today's meals when the screen loads.
+     * Initializes the controller and loads today's meals for the current user.
      */
     @FXML
     public void initialize() {
@@ -48,7 +46,9 @@ public class TrackMealController {
     }
 
     /**
-     * Handle the "Add Meal" button click.
+     * Handles adding a new meal when the "Add Meal" button is clicked.
+     * Validates input fields, saves the meal, updates the daily log, and reloads the displayed meals.
+     * @param event the button click event
      */
     @FXML
     private void handleAddMeal(ActionEvent event) {
@@ -122,7 +122,8 @@ public class TrackMealController {
     }
 
     /**
-     * Handle the "Clear" button click.
+     * Clears all input fields.
+     * @param event the button click event
      */
     @FXML
     private void handleClear(ActionEvent event) {
@@ -130,7 +131,7 @@ public class TrackMealController {
     }
 
     /**
-     * Load and display today's meals for the current user.
+     * Loads and displays today's meals for the current user.
      */
     private void loadTodaysMeals() {
         User currentUser = Session.getCurrentUser();
@@ -166,7 +167,7 @@ public class TrackMealController {
     }
 
     /**
-     * Clear all input fields.
+     * Clear all meal input fields.
      */
     private void clearInputFields() {
         foodNameInput.clear();
@@ -177,7 +178,8 @@ public class TrackMealController {
     }
 
     /**
-     * Show an alert dialog with the given message.
+     * Shows an error alert dialog with the given message.
+     * @param message the message to display
      */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -187,7 +189,9 @@ public class TrackMealController {
     }
 
     /**
-     * Navigate back to meal intermediate screen.
+     * Navigates back to the meal intermediate screen.
+     * @param event the button click event
+     * @throws IOException if the FXML file cannot be loaded
      */
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
@@ -200,4 +204,4 @@ public class TrackMealController {
         stage.setTitle("Meals");
         stage.show();
     }
-}
+}//class end
