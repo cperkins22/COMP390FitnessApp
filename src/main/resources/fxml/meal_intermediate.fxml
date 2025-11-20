@@ -10,33 +10,28 @@
             xmlns="http://javafx.com/javafx/22"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.fitnessapp.MealIntermediateController">
-    <children>
-        <!-- Title -->
-        <Label layoutX="230.0" layoutY="30.0"
-               style="-fx-font-size: 24; -fx-font-weight: bold;"
-               text="Meal Tracking" />
 
-        <!-- Home Button -->
-        <Button layoutX="250.0" layoutY="80.0"
-                mnemonicParsing="false"
-                prefHeight="40.0" prefWidth="100.0"
-                text="Home"
-                onAction="#handleHomeButton"/>
+    <Label layoutX="230.0" layoutY="30.0"
+           style="-fx-font-size: 24; -fx-font-weight: bold;"
+           text="Meal Tracking"/>
 
-        <!-- Track New Meal Button -->
-        <Button layoutX="150.0" layoutY="160.0"
-                mnemonicParsing="false"
-                prefHeight="60.0" prefWidth="300.0"
-                style="-fx-font-size: 16;"
-                text="Track New Meal"
-                onAction="#handleTrackMealButton"/>
+    <Button layoutX="250.0" layoutY="80.0"
+            mnemonicParsing="false"
+            prefHeight="40.0" prefWidth="100.0"
+            text="Home"
+            onAction="#handleHomeButton"/>
 
-        <!-- View Meal Archive Button -->
-        <Button layoutX="150.0" layoutY="240.0"
-                mnemonicParsing="false"
-                prefHeight="60.0" prefWidth="300.0"
-                style="-fx-font-size: 16;"
-                text="View Meal History"
-                onAction="#handleViewMealArchiveButton"/>
-    </children>
+    <Button layoutX="150.0" layoutY="160.0"
+            mnemonicParsing="false"
+            prefHeight="60.0" prefWidth="300.0"
+            style="-fx-font-size: 16;"
+            text="Track New Meal"
+            onAction="#handleTrackMealButton"/>
+
+    <Button layoutX="150.0" layoutY="240.0"
+            mnemonicParsing="false"
+            prefHeight="60.0" prefWidth="300.0"
+            style="-fx-font-size: 16;"
+            text="View Meal History"
+            onAction="#handleViewMealArchiveButton"/>
 </AnchorPane>

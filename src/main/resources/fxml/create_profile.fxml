@@ -5,48 +5,41 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.fitnessapp.CreateProfileController"
             prefWidth="420" prefHeight="420">
-    <children>
-        <VBox spacing="10" prefWidth="360" prefHeight="360" layoutX="30" layoutY="30">
-            <children>
-                <Label text="Create Your Profile" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
-                <GridPane hgap="10" vgap="10">
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="35"/>
-                        <ColumnConstraints percentWidth="65"/>
-                    </columnConstraints>
+    <VBox spacing="10" prefWidth="360" prefHeight="360" layoutX="30" layoutY="30">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+        <Label text="Create Your Profile" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+        <GridPane hgap="10" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="35"/>
+                <ColumnConstraints percentWidth="65"/>
+            </columnConstraints>
 
-                    <!-- First name -->
-                    <Label text="First Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                    <TextField fx:id="firstNameField" promptText="John" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label text="First Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="firstNameField" promptText="John" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                    <!-- Last name -->
-                    <Label text="Last Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                    <TextField fx:id="lastNameField" promptText="Doe" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="Last Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="lastNameField" promptText="Doe" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                    <!-- Email -->
-                    <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                    <TextField fx:id="emailField" promptText="john@example.com" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="emailField" promptText="john@example.com" GridPane.rowIndex="2"
+                       GridPane.columnIndex="1"/>
 
-                    <!-- Height -->
-                    <Label text="Height (in):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                    <TextField fx:id="heightField" promptText="68" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <Label text="Height (in):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="heightField" promptText="68" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-                    <!-- Weight -->
-                    <Label text="Weight (lb):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                    <TextField fx:id="weightField" promptText="135" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            <Label text="Weight (lb):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="weightField" promptText="135" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-                    <!-- PIN -->
-                    <Label text="PIN (4 digits):" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                    <PasswordField fx:id="pinField" promptText="1234" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-                </GridPane>
+            <Label text="PIN (4 digits):" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <PasswordField fx:id="pinField" promptText="1234" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        </GridPane>
 
-                <HBox spacing="10">
-                    <Button text="Cancel" onAction="#handleCancel"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <Button text="Save Profile" defaultButton="true" onAction="#handleSave"/>
-                </HBox>
-            </children>
-            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-        </VBox>
-    </children>
+        <HBox spacing="10">
+            <Button text="Cancel" onAction="#handleCancel"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Save Profile" defaultButton="true" onAction="#handleSave"/>
+        </HBox>
+    </VBox>
 </AnchorPane>

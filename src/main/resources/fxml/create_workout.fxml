@@ -18,14 +18,12 @@
             style="-fx-background-color: #ADD8E6;">
     <top>
         <VBox spacing="10" style="-fx-padding: 20;">
-         <HBox prefHeight="0.0" prefWidth="780.0">
-            <children>
-                  <Label style="-fx-font-size: 22;" text="Create Workout" />
-               <Pane prefHeight="32.0" prefWidth="565.0" />
-               <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Go Back"
-               onAction="#handleBackButton"/>
-            </children>
-         </HBox>
+            <HBox prefHeight="0.0" prefWidth="780.0">
+                <Label style="-fx-font-size: 22;" text="Create Workout"/>
+                <Pane prefHeight="32.0" prefWidth="565.0"/>
+                <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Go Back"
+                        onAction="#handleBackButton"/>
+            </HBox>
             <HBox spacing="10">
                 <Label text="Workout Name:" />
                 <TextField fx:id="workoutNameField" prefWidth="250" />
@@ -39,8 +37,8 @@
                 <Label style="-fx-font-size: 16;" text="Exercises" />
                 <ListView fx:id="exerciseListView" prefHeight="400" />
                 <HBox spacing="10">
-                    <Button fx:id="addExerciseButton" text="Add Exercise" onAction="#addExercise"/>
-                    <Button fx:id="removeExerciseButton" text="Remove Exercise" onAction="#removeExercise"/>
+                    <Button text="Add Exercise" onAction="#addExercise"/>
+                    <Button text="Remove Exercise" onAction="#removeExercise"/>
                 </HBox>
             </VBox>
 
@@ -55,15 +53,15 @@
                     </columns>
                 </TableView>
                 <HBox spacing="10">
-                    <Button fx:id="addSetButton" text="Add Set" onAction="#addSet"/>
-                    <Button fx:id="removeSetButton" text="Remove Set" onAction="#removeSet"/>
+                    <Button text="Add Set" onAction="#addSet"/>
+                    <Button text="Remove Set" onAction="#removeSet"/>
                 </HBox>
             </VBox>
         </SplitPane>
     </center>
 
     <bottom>
-        <Button fx:id="saveWorkoutButton" prefHeight="44.0" prefWidth="116.0" style="-fx-padding: 12; -fx-font-size: 14;" text="Save Workout" BorderPane.alignment="CENTER"
+        <Button prefHeight="44.0" prefWidth="116.0" style="-fx-padding: 12; -fx-font-size: 14;" text="Save Workout" BorderPane.alignment="CENTER"
         onAction="#saveWorkout"/>
     </bottom>
 </BorderPane>

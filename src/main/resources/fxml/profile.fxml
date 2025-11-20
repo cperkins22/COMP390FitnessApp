@@ -16,52 +16,48 @@
             style="-fx-background-color: #ADD8E6;">
 
     <VBox layoutX="30" layoutY="30" spacing="20">
-        <!-- Page Title -->
+
         <Label text="User Profile"
                style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
 
-        <!-- Profile Information Grid -->
         <GridPane hgap="20" vgap="12">
             <columnConstraints>
-                <ColumnConstraints minWidth="120" />
-                <ColumnConstraints minWidth="200" />
+                <ColumnConstraints minWidth="120"/>
+                <ColumnConstraints minWidth="200"/>
             </columnConstraints>
 
-            <children>
-                <Label text="First Name:"                               GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <Label fx:id="firstNameLabel" text="-"                  GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                <TextField fx:id="updateFirstNameField"                 GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                <Button text="Update" onAction="#handleUpdateFirstName" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+            <Label text="First Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label fx:id="firstNameLabel" text="-" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <TextField fx:id="updateFirstNameField" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+            <Button text="Update" onAction="#handleUpdateFirstName" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
 
-                <Label text="Last Name:"                                GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <Label fx:id="lastNameLabel" text="-"                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                <TextField fx:id="updateLastNameField"                  GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-                <Button text="Update" onAction="#handleUpdateLastName"  GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+            <Label text="Last Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Label fx:id="lastNameLabel" text="-" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <TextField fx:id="updateLastNameField" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+            <Button text="Update" onAction="#handleUpdateLastName" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
 
-                <Label text="Height:"                                   GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <Label fx:id="heightLabel" text="-"                     GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                <TextField fx:id="updateHeightField"                    GridPane.rowIndex="2" GridPane.columnIndex="2"/>
-                <Button text="Update" onAction="#handleUpdateHeight"    GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+            <Label text="Height:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Label fx:id="heightLabel" text="-" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <TextField fx:id="updateHeightField" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+            <Button text="Update" onAction="#handleUpdateHeight" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
 
-                <Label text="Weight:"                                   GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <Label fx:id="weightLabel" text="-"                     GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-                <TextField fx:id="updateWeightField"                    GridPane.rowIndex="3" GridPane.columnIndex="2"/>
-                <Button text="Update" onAction="#handleUpdateWeight"    GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+            <Label text="Weight:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <Label fx:id="weightLabel" text="-" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <TextField fx:id="updateWeightField" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+            <Button text="Update" onAction="#handleUpdateWeight" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
 
-                <Label text="Weight Goal:"                              GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <Label fx:id="weightGoalLabel" text="-"                 GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-                <TextField fx:id="updateWeightGoalField"                GridPane.rowIndex="4" GridPane.columnIndex="2"/>
-                <Button text="Update" onAction="#handleUpdateWeightGoal" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+            <Label text="Weight Goal:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <Label fx:id="weightGoalLabel" text="-" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            <TextField fx:id="updateWeightGoalField" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+            <Button text="Update" onAction="#handleUpdateWeightGoal" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
 
-                <Label text="User ID:"                                  GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                <Label fx:id="userIdLabel" text="-"                     GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+            <Label text="User ID:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <Label fx:id="userIdLabel" text="-" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-                <Label text="BMI:"                                      GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                <Label fx:id="bmiLabel" text="-"                        GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-            </children>
+            <Label text="BMI:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+            <Label fx:id="bmiLabel" text="-" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
         </GridPane>
 
-        <!-- Buttons -->
         <HBox spacing="10">
             <Button text="Back to Main Menu" onAction="#handleBackToMenu"/>
         </HBox>

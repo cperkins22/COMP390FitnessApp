@@ -13,7 +13,6 @@
             fx:controller="com.fitnessapp.WorkoutArchiveController"
             style="-fx-background-color: #ADD8E6;">
 
-    <!-- Top bar with title and back button -->
     <top>
         <HBox spacing="10" style="-fx-padding: 15;" alignment="CENTER_LEFT">
             <Label style="-fx-font-size: 20;" text="Workout Archive" />
@@ -21,7 +20,6 @@
         </HBox>
     </top>
 
-    <!-- Left side: List of past workouts -->
     <left>
         <VBox spacing="10" style="-fx-padding: 15;">
             <Label style="-fx-font-size: 16;" text="Select a Workout:" />
@@ -29,7 +27,6 @@
         </VBox>
     </left>
 
-    <!-- Center: List of exercises in the selected workout -->
     <center>
         <VBox spacing="10" style="-fx-padding: 15;">
             <Label style="-fx-font-size: 16;" text="Exercises:" />
@@ -37,7 +34,6 @@
         </VBox>
     </center>
 
-    <!-- Right: Table showing sets for selected exercise -->
     <right>
         <VBox spacing="10" style="-fx-padding: 15;">
             <Label style="-fx-font-size: 16;" text="Exercise Sets:" />

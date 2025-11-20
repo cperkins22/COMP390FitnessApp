@@ -7,14 +7,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.ColumnConstraints?>
 
 <BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.fitnessapp.MealArchiveController"
             style="-fx-background-color: #ADD8E6;">
 
-    <!-- Top bar with title and back button -->
     <top>
         <HBox spacing="10" style="-fx-padding: 15;" alignment="CENTER_LEFT">
             <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Meal Archive" />
@@ -22,7 +20,6 @@
         </HBox>
     </top>
 
-    <!-- Left side: List of dates -->
     <left>
         <VBox spacing="10" style="-fx-padding: 15;">
             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Select a Date:" />
@@ -30,7 +27,6 @@
         </VBox>
     </left>
 
-    <!-- Center: List of meals for selected date -->
     <center>
         <VBox spacing="10" style="-fx-padding: 15;">
             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Meals:" />
@@ -40,7 +36,6 @@
         </VBox>
     </center>
 
-    <!-- Right: Daily totals -->
     <right>
         <VBox spacing="15" style="-fx-padding: 15;">
             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Daily Totals:" />

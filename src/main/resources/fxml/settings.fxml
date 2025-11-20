@@ -10,41 +10,29 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.fitnessapp.SettingsController"
             prefWidth="600" prefHeight="400"
-            style="-fx-background-color: #ADD8E6;"> <!-- light blue background -->
+            style="-fx-background-color: #ADD8E6;">
 
-    <!-- Settings Title -->
     <VBox layoutX="20" layoutY="20" spacing="10">
-        <children>
-            <Label text="Settings"
-                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
-        </children>
+        <Label text="Settings"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
     </VBox>
 
-    <!-- Main buttons -->
-    <!-- Main buttons area -->
     <VBox layoutX="20" layoutY="100" spacing="15" prefWidth="560">
-        <children>
-            <!-- Placeholder text for future options -->
-            <Label text="Settings options will be added here"
-                   style="-fx-font-size: 14px; -fx-text-fill: #555;"/>
-            <Button text="DELETE ALL WORKOUTS FOR CURRENT USER" onAction="#deleteAllWorkouts"/>
+        <Label text="Settings options will be added here"
+               style="-fx-font-size: 14px; -fx-text-fill: #555;"/>
+        <Button text="DELETE ALL WORKOUTS FOR CURRENT USER" onAction="#deleteAllWorkouts"/>
 
-            <Region VBox.vgrow="ALWAYS" minHeight="150"/>
+        <Region VBox.vgrow="ALWAYS" minHeight="150"/>
 
-            <!-- Go Back Button -->
-            <Button fx:id="backButton"
-                    text="Go Back"
-                    prefWidth="200"
-                    onAction="#handleBackButton"/>
+        <Button text="Go Back"
+                prefWidth="200"
+                onAction="#handleBackButton"/>
 
-            <!-- Logout Button -->
-            <Button fx:id="logoutButton"
-                    text="Logout"
-                    prefWidth="200"
-                    prefHeight="40"
-                    onAction="#handleLogout"
-                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
-        </children>
+        <Button text="Logout"
+                prefWidth="200"
+                prefHeight="40"
+                onAction="#handleLogout"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
     </VBox>
 
 </AnchorPane>
