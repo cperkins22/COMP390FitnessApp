@@ -12,6 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * Controller for the screen for entering the PIN for the selected user.
@@ -70,7 +71,7 @@ public class PinController {
             // Success: store user in Session and go to main menu
             Session.setCurrentUser(user);
 
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/main_menu.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/main_menu.fxml")));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("Main Menu");

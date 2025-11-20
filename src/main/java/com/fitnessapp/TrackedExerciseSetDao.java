@@ -15,7 +15,7 @@ import java.util.UUID;
  */
 public class TrackedExerciseSetDao {
     /** Connection to the database. */
-    private Connection conn;
+    private final Connection conn;
     /**
      * Constructs a new DAO with the given database connection.
      * @param conn the database connection

@@ -167,7 +167,7 @@ public class DailyLogDao {
      */
     private DailyLog mapRow(ResultSet rs) throws SQLException {
         UUID id = UUID.fromString(rs.getString("id"));
-        Date date = null;
+        Date date;
 
         // Parse the date
         try {

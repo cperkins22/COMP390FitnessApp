@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -89,7 +90,7 @@ public class ProfileController implements Initializable {
      */
     @FXML
     private void handleBackToMenu(ActionEvent event) throws IOException {
-        Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/fxml/main_menu.fxml"));
+        Parent mainMenuParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/main_menu.fxml")));
         Scene mainMenuScene = new Scene(mainMenuParent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(mainMenuScene);

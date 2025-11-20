@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * Controller for the Settings screen.
@@ -24,7 +25,7 @@ public class SettingsController {
      */
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
-        Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/fxml/main_menu.fxml"));
+        Parent mainMenuParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/main_menu.fxml")));
         Scene mainMenuScene = new Scene(mainMenuParent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(mainMenuScene);
@@ -58,7 +59,7 @@ public class SettingsController {
     @FXML
     private void handleLogout(ActionEvent event) throws IOException {
         Session.clear();
-        Parent login = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+        Parent login = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/login.fxml")));
         Scene scene = new Scene(login);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Select Profile");

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Objects;
 
 /**
  * Controller for tracking workouts.
@@ -213,7 +214,7 @@ public class TrackWorkoutController {
      */
     @FXML
     private void handleBackButton(javafx.event.ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/fxml/workout_intermediate.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/workout_intermediate.fxml")));
         Scene scene = new Scene(parent);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

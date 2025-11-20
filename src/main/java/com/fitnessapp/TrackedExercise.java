@@ -11,13 +11,13 @@ import java.util.UUID;
 public class TrackedExercise {
 
     /** Unique identifier for this tracked exercise. */
-    private UUID id;
+    private final UUID id;
 
     /** Name of the exercise (e.g., "Bench Press"). */
     private String name;
 
     /** List of sets performed for this exercise. */
-    private List<TrackedExerciseSet> sets;
+    private final List<TrackedExerciseSet> sets;
 
     /**
      * Constructs a new TrackedExercise with a unique ID and an empty set list.

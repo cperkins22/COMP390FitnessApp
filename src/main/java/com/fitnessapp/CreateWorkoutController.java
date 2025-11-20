@@ -14,6 +14,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * A controller class for the CreateWorkout screen.
@@ -70,7 +71,7 @@ public class CreateWorkoutController {
             }
         });
 
-        exerciseListView.setCellFactory(TextFieldListCell.forListView(new javafx.util.StringConverter<Exercise>() {
+        exerciseListView.setCellFactory(TextFieldListCell.forListView(new javafx.util.StringConverter<>() {
             @Override
             public String toString(Exercise exercise) {
                 return exercise.getName();
@@ -221,7 +222,7 @@ public class CreateWorkoutController {
      */
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/fxml/workout_intermediate.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/workout_intermediate.fxml")));
         Scene scene = new Scene(parent);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

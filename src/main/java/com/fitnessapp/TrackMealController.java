@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Controller for tracking meals.
@@ -196,7 +197,7 @@ public class TrackMealController {
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
         // Navigate back to meal intermediate instead of main menu
-        Parent mealIntermediateParent = FXMLLoader.load(getClass().getResource("/fxml/meal_intermediate.fxml"));
+        Parent mealIntermediateParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/meal_intermediate.fxml")));
         Scene mealIntermediateScene = new Scene(mealIntermediateParent);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

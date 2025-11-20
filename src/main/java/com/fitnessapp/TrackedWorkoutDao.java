@@ -14,9 +14,9 @@ import java.util.UUID;
  */
 public class TrackedWorkoutDao {
     /** Database connection used for all operations. */
-    private Connection conn;
+    private final Connection conn;
     /** DAO for handling exercises associated with workouts. */
-    private TrackedExerciseDao exerciseDao;
+    private final TrackedExerciseDao exerciseDao;
 
     /**
      * Constructs a TrackedWorkoutDao with a database connection.

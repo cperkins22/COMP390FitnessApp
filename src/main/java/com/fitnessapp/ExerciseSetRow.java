@@ -1,12 +1,12 @@
 package com.fitnessapp;
 
+import javafx.beans.property.*;
+
 /**
  * A small helper class to help with displaying archived workout sets
  * Represents a single row in a table view for displaying archived workout sets.
  * Stores the exercise name, set number, reps, and weight using JavaFX properties.
  */
-import javafx.beans.property.*;
-
 public class ExerciseSetRow {
 
     /** Name of the exercise. */

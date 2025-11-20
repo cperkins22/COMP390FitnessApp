@@ -1,8 +1,6 @@
 package com.fitnessapp;
 
 import java.util.UUID;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents a user in the fitness app
@@ -125,7 +123,7 @@ public class User {
 
     /**
      * Calculates and returns the user's BMI
-     * BMI is calculated using the formula: (weight / (height * height)) * 703
+     * The BMI is calculated using the formula: (weight / (height * height)) * 703
      * Uses imperial units: weight in pounds and height in inches.
      * Returns 0.0 if height is invalid
      *

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Workout {
     /** Unique identifier for the workout. */
-    private UUID id;
+    private final UUID id;
 
     /** Date of the workout. */
     private Date date;

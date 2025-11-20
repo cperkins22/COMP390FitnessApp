@@ -194,7 +194,7 @@ public class MealDao {
     private Meal mapRow(ResultSet rs) throws SQLException {
         UUID id = UUID.fromString(rs.getString("id"));
         String name = rs.getString("name");
-        Date date = null;
+        Date date;
 
         // Parse the date
         try {

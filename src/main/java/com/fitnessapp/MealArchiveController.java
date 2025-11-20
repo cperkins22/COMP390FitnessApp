@@ -167,7 +167,7 @@ public class MealArchiveController {
      */
     @FXML
     private void handleBackButton(javafx.event.ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/fxml/main_menu.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/main_menu.fxml")));
         Scene scene = new Scene(parent);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

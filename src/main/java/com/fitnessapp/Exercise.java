@@ -11,7 +11,6 @@ import java.util.List;
  * Each Exercise contains info such as its name, description,
  * and a list of ExerciseSet objects that record the repetitions
  * and weight lifted for each set.
- *
  * Attributes:
  * - id (UUID): Unique identifier automatically generated for each exercise.
  * - name (String): The name of the exercise (e.g., "Bench Press").
@@ -19,7 +18,6 @@ import java.util.List;
  * - sets (int): The total number of sets performed.
  * - repsPerSet (int): Default or planned number of repetitions per set.
  * - setList (List<ExerciseSet>): Stores individual sets with reps and weight.
- *
  * Methods:
  * - addSet(ExerciseSet set): Adds a new set to the exercise.
  * - getTotalWeightLifted(): Calculates total (reps × weight) for all sets.
@@ -44,7 +42,7 @@ public class Exercise {
     private int repsPerSet;
 
     /** List of all sets associated with this exercise. */
-    private List<ExerciseSet> setList;
+    private final List<ExerciseSet> setList;
 
     /**
      * Constructs a new Exercise with the given name and description.

@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * A controller class for the CreateProfile screen.
@@ -40,7 +41,7 @@ public class CreateProfileController {
     @FXML
     private void handleCancel(ActionEvent event) throws IOException {
         // Go back to profile picker (login.fxml)
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/login.fxml")));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Select Profile");
@@ -87,7 +88,7 @@ public class CreateProfileController {
             userDao.insert(user);
 
             // After saving, go back to profile picker so user can select and log in
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/login.fxml")));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("Select Profile");

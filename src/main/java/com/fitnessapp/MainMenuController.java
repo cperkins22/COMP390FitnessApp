@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * Controller for the main menu screen.
@@ -42,7 +43,7 @@ public class MainMenuController {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            caloriesLabel.setText("0"); // defualt
+            caloriesLabel.setText("0"); // default
         }
     }
 
@@ -54,7 +55,7 @@ public class MainMenuController {
      */
     @FXML
     private void handleSettingsButton(ActionEvent event) throws IOException {
-        Parent settingsParent = FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));
+        Parent settingsParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/settings.fxml")));
         Scene settingsScene = new Scene(settingsParent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(settingsScene);
@@ -70,7 +71,7 @@ public class MainMenuController {
      */
     @FXML
     private void handleTrackWorkoutButton(ActionEvent event) throws IOException {
-        Parent workoutParent = FXMLLoader.load(getClass().getResource("/fxml/workout_intermediate.fxml"));
+        Parent workoutParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/workout_intermediate.fxml")));
         Scene workoutScene = new Scene(workoutParent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(workoutScene);
@@ -87,7 +88,7 @@ public class MainMenuController {
     @FXML
     private void handleTrackMealButton(ActionEvent event) throws IOException {
         // Navigate to meal intermediate instead of directly to TrackMeal
-        Parent mealParent = FXMLLoader.load(getClass().getResource("/fxml/meal_intermediate.fxml"));
+        Parent mealParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/meal_intermediate.fxml")));
         Scene mealScene = new Scene(mealParent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(mealScene);
@@ -103,7 +104,7 @@ public class MainMenuController {
      */
     @FXML
     private void handleProfileButton(ActionEvent event) throws IOException {
-        Parent profile = FXMLLoader.load(getClass().getResource("/fxml/profile.fxml"));
+        Parent profile = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/profile.fxml")));
         Scene scene = new Scene(profile);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Personal Stats");

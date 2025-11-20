@@ -15,10 +15,10 @@ import java.util.UUID;
 public class TrackedExerciseDao {
 
     /** Database connection used for queries. */
-    private Connection conn;
+    private final Connection conn;
 
     /** DAO for handling individual exercise sets. */
-    private TrackedExerciseSetDao setDao;
+    private final TrackedExerciseSetDao setDao;
 
     /**
      * Constructs a new TrackedExerciseDao with the given database connection.
