@@ -71,7 +71,7 @@ public class ProfileController implements Initializable {
         lastNameLabel.setText(safe(user.getLastName()));
 
         heightLabel.setText(String.format("%d ft %.0f in", (int) (user.getHeight() / 12), (user.getHeight() % 12)));
-        weightLabel.setText(String.format("%.0f lb", user.getWeight()));
+        weightLabel.setText(String.format("%.1f lb", user.getWeight()));
         weightGoalLabel.setText(String.format("%.0f lb", user.getWeightGoal()));
 
         userIdLabel.setText(safeUUID(user.getId()));
@@ -153,7 +153,10 @@ public class ProfileController implements Initializable {
             userDao.update(user);
             heightLabel.setText(String.format("%d ft %.0f in", (int) (user.getHeight() / 12), (user.getHeight() % 12)));
             updateHeightField.clear();
-        } catch (SQLException e) {
+        } catch (NumberFormatException e) {
+            alert("Invalid value. Please enter a whole number (in inches) for height.");
+        }
+        catch (SQLException e) {
             alert("Failed to update user: " + e.getMessage());
         }
     }
@@ -168,15 +171,17 @@ public class ProfileController implements Initializable {
         try{
             System.out.println("WEIGHT UPDATED");
             User user = Session.getCurrentUser();
-            user.setWeight(Integer.parseInt(updateWeightField.getText()));
+            user.setWeight(Float.parseFloat(updateWeightField.getText()));
             UserDao userDao = new UserDao();
             userDao.update(user);
-            weightLabel.setText(String.format("%.0f lb", user.getWeight()));
+            weightLabel.setText(String.format("%.1f lb", user.getWeight()));
             updateWeightField.clear();
-        } catch (SQLException e) {
+        } catch (NumberFormatException e) {
+            alert("Invalid value. Please enter a number (in lbs) for weight.");
+        }
+        catch (SQLException e) {
             alert("Failed to update user: " + e.getMessage());
         }
-
     }
 
     /**

@@ -148,6 +148,26 @@ public class WorkoutDao {
     }
 
     /**
+     * Finds a workout by its name.
+     * @param name the workout's name
+     * @return an Optional containing the User if found, otherwise empty
+     * @throws SQLException if a database error occurs
+     */
+    public Optional<Workout> findByName(String name) throws SQLException {
+        final String sql = "SELECT * FROM workouts WHERE name = ?";
+
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setString(1, name);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? Optional.of(mapWorkoutRow(rs)) : Optional.empty();
+            }
+        }
+    }
+
+    /**
      * Loads all exercises and their sets for a workout.
      */
     private void loadExercisesForWorkout(Workout workout) throws SQLException {

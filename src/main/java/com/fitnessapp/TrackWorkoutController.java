@@ -119,18 +119,136 @@ public class TrackWorkoutController {
         });
         setCol.setEditable(false);
 
-        repsCol.setCellFactory(TextFieldTableCell.forTableColumn(new javafx.util.converter.IntegerStringConverter()));
-        repsCol.setOnEditCommit(event -> {
-            ExerciseSet set = event.getRowValue();
-            set.setReps(event.getNewValue());
-            setTable.refresh();
+        repsCol.setCellFactory(col -> new TableCell<ExerciseSet, Integer>() {
+            private TextField textField;
+
+            @Override
+            public void startEdit() {
+                super.startEdit();
+                if (!isEmpty()) {
+                    textField = new TextField(getItem() == null ? "" : String.valueOf(getItem()));
+                    setGraphic(textField);
+                    setText(null);
+                    textField.selectAll();
+                    textField.requestFocus();
+
+                    textField.setOnAction(e -> {
+                        try {
+                            commitEdit(Integer.parseInt(textField.getText().trim()));
+                        } catch (NumberFormatException ex) {
+                            showAlert(Alert.AlertType.ERROR, "Invalid reps", "Please enter a whole number for reps.");
+                            cancelEdit();
+                        }
+                    });
+
+                    textField.focusedProperty().addListener((obs, oldV, newV) -> {
+                        if (!newV) {
+                            try {
+                                commitEdit(Integer.parseInt(textField.getText().trim()));
+                            } catch (NumberFormatException ex) {
+                                showAlert(Alert.AlertType.ERROR, "Invalid reps", "Please enter a whole number for reps.");
+                                cancelEdit();
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void cancelEdit() {
+                super.cancelEdit();
+                setText(getItem() == null ? "" : String.valueOf(getItem()));
+                setGraphic(null);
+            }
+
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else if (isEditing()) {
+                    if (textField != null) textField.setText(String.valueOf(item));
+                    setText(null);
+                    setGraphic(textField);
+                } else {
+                    setText(String.valueOf(item));
+                    setGraphic(null);
+                }
+            }
         });
 
-        weightCol.setCellFactory(TextFieldTableCell.forTableColumn(new javafx.util.converter.FloatStringConverter()));
+        repsCol.setOnEditCommit(event -> {
+            if (event.getNewValue() != null) {
+                event.getRowValue().setReps(event.getNewValue());
+                setTable.refresh();
+            }
+        });
+
+        weightCol.setCellFactory(col -> new TableCell<ExerciseSet, Float>() {
+            private TextField textField;
+
+            @Override
+            public void startEdit() {
+                super.startEdit();
+                if (!isEmpty()) {
+                    textField = new TextField(getItem() == null ? "" : String.valueOf(getItem()));
+                    setGraphic(textField);
+                    setText(null);
+                    textField.selectAll();
+                    textField.requestFocus();
+
+                    textField.setOnAction(e -> {
+                        try {
+                            commitEdit(Float.parseFloat(textField.getText().trim()));
+                        } catch (NumberFormatException ex) {
+                            showAlert(Alert.AlertType.ERROR, "Invalid weight", "Please enter a number like 135 or 135.5 for weight.");
+                            cancelEdit();
+                        }
+                    });
+
+                    textField.focusedProperty().addListener((obs, oldV, newV) -> {
+                        if (!newV) {
+                            try {
+                                commitEdit(Float.parseFloat(textField.getText().trim()));
+                            } catch (NumberFormatException ex) {
+                                showAlert(Alert.AlertType.ERROR, "Invalid weight", "Please enter a number like 135 or 135.5 for weight.");
+                                cancelEdit();
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void cancelEdit() {
+                super.cancelEdit();
+                setText(getItem() == null ? "" : String.valueOf(getItem()));
+                setGraphic(null);
+            }
+
+            @Override
+            protected void updateItem(Float item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else if (isEditing()) {
+                    if (textField != null) textField.setText(String.valueOf(item));
+                    setText(null);
+                    setGraphic(textField);
+                } else {
+                    setText(String.valueOf(item));
+                    setGraphic(null);
+                }
+            }
+        });
+
         weightCol.setOnEditCommit(event -> {
-            ExerciseSet set = event.getRowValue();
-            set.setWeight(event.getNewValue());
-            setTable.refresh();
+            if (event.getNewValue() != null) {
+                event.getRowValue().setWeight(event.getNewValue());
+                setTable.refresh();
+            }
         });
     }
 

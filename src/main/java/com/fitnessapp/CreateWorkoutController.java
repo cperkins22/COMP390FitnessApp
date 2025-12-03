@@ -10,11 +10,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A controller class for the CreateWorkout screen.
@@ -105,17 +107,180 @@ public class CreateWorkoutController {
 
         setTable.setEditable(true);
 
-        repsCol.setCellFactory(TextFieldTableCell.forTableColumn(new javafx.util.converter.IntegerStringConverter()));
-        weightCol.setCellFactory(TextFieldTableCell.forTableColumn(new javafx.util.converter.FloatStringConverter()));
+        // ------------------------------------------------------------------------------------------------------------------
+        // Custom cell factory for REPS (Integer) that validates input itself
+        // This is necessary since the JavaFX CellFactory framework makes it extremely tricky to handle NumberFormat errors.
+        // ------------------------------------------------------------------------------------------------------------------
+        repsCol.setCellFactory(col -> new TableCell<ExerciseSet, Integer>() {
+            private TextField textField;
+
+            private void createTextField() {
+                textField = new TextField(getItem() == null ? "" : String.valueOf(getItem()));
+                textField.setOnKeyReleased((KeyEvent t) -> {
+                    if (t.getCode() == KeyCode.ENTER) {
+                        commitIfValid();
+                    } else if (t.getCode() == KeyCode.ESCAPE) {
+                        cancelEdit();
+                    }
+                });
+                // commit on focus lost
+                textField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+                    if (!isNowFocused) {
+                        commitIfValid();
+                    }
+                });
+            }
+
+            private void commitIfValid() {
+                if (textField == null) return;
+                String text = textField.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    // treat empty as cancel — or you can treat as 0 if you prefer
+                    cancelEdit();
+                    return;
+                }
+                try {
+                    int parsed = Integer.parseInt(text.trim());
+                    // commit parsed value
+                    commitEdit(parsed);
+                } catch (NumberFormatException ex) {
+                    alert("Invalid reps value. Please enter a whole number.");
+                    cancelEdit();
+                }
+            }
+
+            @Override
+            public void startEdit() {
+                if (!isEmpty()) {
+                    super.startEdit();
+                    createTextField();
+                    setText(null);
+                    setGraphic(textField);
+                    textField.requestFocus();
+                    textField.selectAll();
+                }
+            }
+
+            @Override
+            public void cancelEdit() {
+                super.cancelEdit();
+                setGraphic(null);
+                setText(getItem() == null ? "" : String.valueOf(getItem()));
+            }
+
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    if (isEditing()) {
+                        if (textField != null) {
+                            textField.setText(item == null ? "" : String.valueOf(item));
+                        }
+                        setText(null);
+                        setGraphic(textField);
+                    } else {
+                        setText(item == null ? "" : String.valueOf(item));
+                        setGraphic(null);
+                    }
+                }
+            }
+        });
+
+        // -------------------------------------------------------------------
+        // Custom cell factory for WEIGHT (Float) that validates input itself
+        // This is necessary since the JavaFX CellFactory framework makes it extremely tricky to handle NumberFormat errors.
+        // -------------------------------------------------------------------
+        weightCol.setCellFactory(col -> new TableCell<ExerciseSet, Float>() {
+            private TextField textField;
+
+            private void createTextField() {
+                textField = new TextField(getItem() == null ? "" : String.valueOf(getItem()));
+                textField.setOnKeyReleased((KeyEvent t) -> {
+                    if (t.getCode() == KeyCode.ENTER) {
+                        commitIfValid();
+                    } else if (t.getCode() == KeyCode.ESCAPE) {
+                        cancelEdit();
+                    }
+                });
+                textField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+                    if (!isNowFocused) {
+                        commitIfValid();
+                    }
+                });
+            }
+
+            private void commitIfValid() {
+                if (textField == null) return;
+                String text = textField.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    cancelEdit();
+                    return;
+                }
+                try {
+                    float parsed = Float.parseFloat(text.trim());
+                    commitEdit(parsed);
+                } catch (NumberFormatException ex) {
+                    alert("Invalid weight. Enter a number like 135 or 135.5.");
+                    cancelEdit();
+                }
+            }
+
+            @Override
+            public void startEdit() {
+                if (!isEmpty()) {
+                    super.startEdit();
+                    createTextField();
+                    setText(null);
+                    setGraphic(textField);
+                    textField.requestFocus();
+                    textField.selectAll();
+                }
+            }
+
+            @Override
+            public void cancelEdit() {
+                super.cancelEdit();
+                setGraphic(null);
+                setText(getItem() == null ? "" : String.valueOf(getItem()));
+            }
+
+            @Override
+            protected void updateItem(Float item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    String s = item == null ? "" : String.valueOf(item);
+                    if (isEditing()) {
+                        if (textField != null) {
+                            textField.setText(s);
+                        }
+                        setText(null);
+                        setGraphic(textField);
+                    } else {
+                        setText(s);
+                        setGraphic(null);
+                    }
+                }
+            }
+        });
 
         repsCol.setOnEditCommit(event -> {
-            ExerciseSet set = event.getRowValue();
-            set.setReps(event.getNewValue());
+            if (event.getNewValue() != null) {
+                ExerciseSet set = event.getRowValue();
+                set.setReps(event.getNewValue());
+            }
         });
 
         weightCol.setOnEditCommit(event -> {
-            ExerciseSet set = event.getRowValue();
-            set.setWeight(event.getNewValue());
+            if (event.getNewValue() != null) {
+                ExerciseSet set = event.getRowValue();
+                set.setWeight(event.getNewValue());
+            }
         });
     }
 
@@ -186,13 +351,14 @@ public class CreateWorkoutController {
         }
 
         String workoutName = workoutNameField.getText().trim();
-        //String workoutNotes = exerciseDescriptionArea.getText().trim();
         if (workoutName.isEmpty()) {
             alert("Please enter a workout name!");
             return;
         }
 
         currentWorkout.setName(workoutName);
+
+
 
         if (currentWorkout.getExercises().isEmpty()) {
             alert("Please add at least one exercise!");
@@ -201,6 +367,10 @@ public class CreateWorkoutController {
 
         try {
             WorkoutDao workoutDao = new WorkoutDao();
+            Optional<Workout> optionalValue = workoutDao.findByName(currentWorkout.getName());
+            if(optionalValue.isPresent()){
+                throw new IllegalArgumentException("There already exists a workout with this name!");
+            }
             workoutDao.insert(currentWorkout, currentUser.getId());
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -208,7 +378,10 @@ public class CreateWorkoutController {
             alert.setContentText("Workout saved successfully!");
             alert.showAndWait();
 
-        } catch (SQLException e) {
+        } catch(IllegalArgumentException e){
+            alert("There already exists a workout with this name!");
+        }
+        catch (SQLException e) {
             alert("Error saving workout: " + e.getMessage());
             e.printStackTrace();
         }
@@ -236,7 +409,7 @@ public class CreateWorkoutController {
      * Helper method to easily display an alert.
      * @param msg the message to display in the alert
      */
-    private static void alert(String msg) {
+    public static void alert(String msg) {
         var a = new Alert(Alert.AlertType.ERROR);
         a.setHeaderText(null);
         a.setContentText(msg);
